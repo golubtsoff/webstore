@@ -17,21 +17,17 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Column(name = "LOGIN", unique = true, updatable = false)
     private String login;
 
-    @NotNull
     @Column(name = "PASSWORD")
     private String password;
 
-    @NotNull
     @Column(name = "ROLE")
     @Enumerated(EnumType.STRING)
     private Role role;
 
     public Person(){
-
     }
 
     public Person(String login, String password, Role role) {

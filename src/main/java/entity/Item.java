@@ -17,18 +17,15 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Column(name = "TITLE")
     private String title;
 
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @NotNull
     @Column(name = "PRICE")
     private double price;
 
-    @NotNull
     @Column(name = "AMOUNT")
     private int amount;
 
@@ -38,7 +35,7 @@ public class Item {
         this(null, title, description, price, amount);
     }
 
-    public Item(Long id, String title, String description, double price, int amount) {
+    public Item(Long id, @NotNull String title, String description, double price, int amount) {
         this.id = id;
         this.title = title;
         this.description = description;

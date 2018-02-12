@@ -4,12 +4,13 @@ import entity.Item;
 import entity.Person;
 import entity.Purchase;
 import entity.Role;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-public class DBService implements AutoCloseable {
+public class DBService {
     private static final String hibernate_show_sql = "true";
     //    So the list of possible options are,
 //
@@ -19,15 +20,22 @@ public class DBService implements AutoCloseable {
 //    create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
     private static final String hibernate_hbm2ddl_auto = "create";
 
-    private final SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
 
-    public DBService() {
+    static {
         Configuration configuration = getH2Configuration();
         sessionFactory = createSessionFactory(configuration);
     }
 
+    private DBService() {
+    }
+
+    public static Session getSession(){
+        return sessionFactory.openSession();
+    }
+
     @SuppressWarnings("UnusedDeclaration")
-    private Configuration getMySqlConfiguration() {
+    private static Configuration getMySqlConfiguration() {
         Configuration configuration = new Configuration();
         addAnnotatedClassToConfiguration(configuration);
 
@@ -41,7 +49,7 @@ public class DBService implements AutoCloseable {
         return configuration;
     }
 
-    private Configuration getH2Configuration() {
+    private static Configuration getH2Configuration() {
         Configuration configuration = new Configuration();
         addAnnotatedClassToConfiguration(configuration);
 
@@ -56,7 +64,7 @@ public class DBService implements AutoCloseable {
         return configuration;
     }
 
-    private void addAnnotatedClassToConfiguration(Configuration configuration) {
+    private static void addAnnotatedClassToConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(Person.class)
                 .addAnnotatedClass(Item.class)
                 .addAnnotatedClass(Purchase.class)
@@ -70,12 +78,7 @@ public class DBService implements AutoCloseable {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    @Override
-    public void close() throws Exception {
-        this.closeConnection();
-    }
-
-    public void closeConnection() {
+    public static void close(){
         sessionFactory.close();
     }
 }
