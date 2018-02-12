@@ -1,4 +1,4 @@
-package main;
+package test;
 
 import dao.*;
 import entity.Person;
@@ -11,7 +11,7 @@ import static entity.Role.user;
 /**
  * Created by Evgeniy Golubtsov on 10.02.2018.
  */
-public class TestPerson {
+public class PersonTest {
     public static void main(String[] args) throws Exception {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();

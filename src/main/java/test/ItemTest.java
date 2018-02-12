@@ -1,4 +1,4 @@
-package main;
+package test;
 
 import dao.DBService;
 import dao.ItemDAO;
@@ -9,12 +9,10 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-import static entity.Role.admin;
-
 /**
  * Created by Evgeniy Golubtsov on 10.02.2018.
  */
-public class TestItem {
+public class ItemTest {
     public static void main(String[] args) throws Exception {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();

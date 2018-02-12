@@ -1,4 +1,4 @@
-package main;
+package test;
 
 import dao.*;
 import entity.Item;
@@ -10,13 +10,12 @@ import org.hibernate.Transaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static entity.Role.admin;
 import static entity.Role.user;
 
 /**
  * Created by Evgeniy Golubtsov on 10.02.2018.
  */
-public class TestPurchase {
+public class PurchaseTest {
     public static void main(String[] args) throws Exception {
         try (Session session = DBService.getSession()) {
             Transaction transaction = session.beginTransaction();
