@@ -8,13 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Sign up</title>
 </head>
 <body>
-<form method="POST" action="login">
+<form method="POST" action="signup">
     <table>
         <tr>
-            <td colspan="2">Login to the WebStore application:</td>
+            <td colspan="2">Sign up to the WebStore application:</td>
         </tr>
         <tr>
             <td>Login:</td>
@@ -25,7 +25,11 @@
             <td><input type="password" name="password"/></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="Go"/></td>
+            <td>Retype password:</td>
+            <td><input type="password" name="retype_password"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Sign up"/></td>
         </tr>
     </table>
 </form>

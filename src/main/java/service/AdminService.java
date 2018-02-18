@@ -8,11 +8,7 @@ import java.util.List;
 /**
  * Created by Evgeniy Golubtsov on 12.02.2018.
  */
-public interface AdminService {
-
-    boolean signIn(String name, String password);
-
-    List<Item> getItems();
+public interface AdminService extends PersonService {
 
     int createItem(Item item);
 

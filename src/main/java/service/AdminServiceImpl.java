@@ -11,22 +11,10 @@ import java.util.List;
  */
 
 //TODO implement methods
-public class AdminServiceImpl implements AdminService {
-
-    private Person person;
+public class AdminServiceImpl extends PersonServiceImpl implements AdminService {
 
     public AdminServiceImpl(Person person){
         this.person = person;
-    }
-
-    @Override
-    public boolean signIn(String name, String password) {
-        return false;
-    }
-
-    @Override
-    public List<Item> getItems() {
-        return null;
     }
 
     @Override
