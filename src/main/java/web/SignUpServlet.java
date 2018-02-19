@@ -42,7 +42,7 @@ public class SignUpServlet extends HttpServlet {
         }
 
         if (person != null) {
-            request.getRequestDispatcher("/signin").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
         } else {
             response.setContentType("text/plain;charset=utf-8");
             response.getWriter().println("Not registered");

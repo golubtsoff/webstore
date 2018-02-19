@@ -29,7 +29,8 @@
             <td><input type="password" name="retype_password"/></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="Sign up"/></td>
+            <td><input type="submit" value="Sign up"/></td>
+            <td><a href="signin">Sign in</a></td>
         </tr>
     </table>
 </form>
