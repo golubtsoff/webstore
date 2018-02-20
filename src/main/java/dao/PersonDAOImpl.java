@@ -36,8 +36,8 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
     @Override
-    public long create(Person account) {
-        return (Long) session.save(account);
+    public long create(Person person) {
+        return (Long) session.save(person);
     }
 
 }

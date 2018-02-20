@@ -11,6 +11,8 @@ import java.util.List;
 //TODO implement methods
 public class UserServiceImpl extends PersonServiceImpl implements UserService {
 
+    private Person person;
+
     public UserServiceImpl(Person person){
         this.person = person;
     }

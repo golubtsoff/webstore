@@ -1,8 +1,6 @@
 package service;
 
-import dao.DBService;
-import dao.PersonDAO;
-import dao.PersonDAOImpl;
+import dao.*;
 import entity.Item;
 import entity.Person;
 import entity.Role;
@@ -17,17 +15,14 @@ import java.util.List;
 /**
  * Created by Evgeniy Golubtsov on 18.02.2018.
  */
-//TODO implement methods
-public class PersonServiceImpl implements PersonService {
 
-    protected Person person;
+public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person signIn(String name, String password) {
         try (Session session = DBService.getSession()){
             PersonDAO dao = new PersonDAOImpl(session);
-            person = dao.getByName(name);
-            return person;
+            return dao.getByName(name);
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
         }
@@ -53,6 +48,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Item> getItems() {
-        return null;
+        try (Session session = DBService.getSession()){
+            ItemDAO dao = new ItemDAOImpl(session);
+            return dao.getAll();
+        } catch (HibernateException | NoResultException e) {
+            throw new DBException(e);
+        }
     }
 }
