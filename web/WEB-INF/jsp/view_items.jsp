@@ -14,21 +14,29 @@
 </head>
 <body>
 <section>
+    <a href="items?action=add"><img src="img/add.png"></a>
+    <%--<a href="items?action=add">Add item</a>--%>
+
+    <br />
     <table border="1" cellpadding="8" cellspacing="0" style="margin: auto">
         <tr>
-            <th>Имя</th>
-            <th>Email</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Amount</th>
             <th></th>
             <th></th>
         </tr>
-        <jsp:useBean id="resumes" scope="request" type="java.util.List"/>
-        <c:forEach items="${resumes}" var="resume">
-            <jsp:useBean id="resume" type="com.urise.webapp.model.Resume"/>
+        <jsp:useBean id="items" scope="request" type="java.util.List"/>
+        <c:forEach items="${items}" var="item">
+            <jsp:useBean id="item" type="entity.Item"/>
             <tr>
-                <td><a href="resume?uuid=${resume.uuid}&action=view">${resume.fullName}</a></td>
-                <td><%=ContactType.MAIL.toHtml(resume.getContact(ContactType.MAIL))%></td>
-                <td><a href="resume?uuid=${resume.uuid}&action=delete"><img src="img/delete.png"></a></td>
-                <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></td>
+                <td><a href="item?id=${item.id}&action=view">${item.title}</a></td>
+                <td>${item.price}</td>
+                <td>${item.amount}</td>
+                <%--<td><a href="item?id=${item.id}&action=delete"><img src="img/delete.png"></a></td>--%>
+                <%--<td><a href="item?id=${item.id}&action=edit"><img src="img/pencil.png"></a></td>--%>
+                <td><a href="item?id=${item.id}&action=delete">Delete</a></td>
+                <td><a href="item?id=${item.id}&action=edit">Edit</a></td>
             </tr>
         </c:forEach>
     </table>

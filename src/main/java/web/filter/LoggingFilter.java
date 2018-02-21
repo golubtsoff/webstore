@@ -18,22 +18,25 @@ public class LoggingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
         if (session != null && session.getAttribute("person") != null) {
-            chain.doFilter(request, response);
+//            chain.doFilter(request, response);
+            request.getRequestDispatcher("/items").forward(request, response);
         } else {
-            request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
+//            request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
+            request.getRequestDispatcher("/signin").forward(request, response);
         }
     }
 
     @Override
-    public void init(FilterConfig config) throws ServletException{
+    public void init(FilterConfig config) throws ServletException {
 
     }
 
     @Override
-    public void destroy(){
+    public void destroy() {
 
     }
 }
