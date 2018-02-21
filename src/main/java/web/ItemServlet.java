@@ -1,5 +1,8 @@
 package web;
 
+import service.PersonService;
+import service.PersonServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +18,12 @@ public class ItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
-//            request.setAttribute("items", storage.getAllSorted());
-//            request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
+            PersonService personService = new PersonServiceImpl();
+            request.setAttribute("items", personService.getItems());
+            request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
             return;
         }
     }
