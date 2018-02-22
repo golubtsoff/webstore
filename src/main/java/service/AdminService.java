@@ -14,7 +14,7 @@ public interface AdminService extends PersonService {
 
     void updateItem(Item item);
 
-    void deleteItem(Item item);
+    void deleteItem(long id);
 
     List<Purchase> getPurchases();
 }

@@ -46,8 +46,17 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
-    public void deleteItem(Item item) {
+    public void deleteItem(long id) {
+        try (Session session = DBService.getSession()){
+            Transaction transaction = session.beginTransaction();
 
+            ItemDAO dao = new ItemDAOImpl(session);
+            dao.delete(id);
+
+            transaction.commit();
+        } catch (HibernateException | NoResultException e) {
+            throw new DBException(e);
+        }
     }
 
     @Override

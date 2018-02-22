@@ -67,7 +67,10 @@ public class LoggingFilter implements Filter {
         items.add(new Item("Велосипед", "Спортивный велосипед для поездки по пересечённой местности", 9999.99, 3));
         items.add(new Item("Воздушный шар", "Шары надувные разноцветные", 10.5, 265));
         for (Item item : items) {
-            adminService.createItem(item);
+            Long id = adminService.createItem(item);
+            if (id == 1L){
+                adminService.deleteItem(id);
+            }
         }
     }
 }
