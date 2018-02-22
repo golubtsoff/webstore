@@ -14,8 +14,8 @@
 </head>
 <body>
 <section>
-    <a href="items?action=add"><img src="img/add.png"></a>
-    <%--<a href="items?action=add">Add item</a>--%>
+    <%--<a href="items?action=add"><img src="img/add.png"></a>--%>
+    <a href="items?action=add">Add item</a>
 
     <br />
     <table border="1" cellpadding="8" cellspacing="0" style="margin: auto">
