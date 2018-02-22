@@ -25,11 +25,6 @@ public class LoggingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-//        для тестового добавления пользователей
-//        TODO remove in production
-        addPersons(request, response);
-        addItems();
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
@@ -45,7 +40,10 @@ public class LoggingFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
-
+//        для тестового добавления пользователей
+//        TODO remove in production
+        addPersons();
+        addItems();
     }
 
     @Override
@@ -53,17 +51,11 @@ public class LoggingFilter implements Filter {
 
     }
 
-    private void addPersons(ServletRequest request, ServletResponse response) {
+    private void addPersons() {
         // sign up person
         PersonService personService = new PersonServiceImpl();
         personService.signUp("root", "123", Role.admin);
         Person person = personService.signUp("user", "345");
-
-        // create session of person
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession(false);
-        session.setAttribute("person", person);
     }
 
     private void addItems() {

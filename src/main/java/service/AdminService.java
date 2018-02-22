@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface AdminService extends PersonService {
 
-    int createItem(Item item);
+    long createItem(Item item);
 
     void updateItem(Item item);
 

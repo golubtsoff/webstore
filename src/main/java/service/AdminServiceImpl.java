@@ -1,9 +1,15 @@
 package service;
 
+import dao.*;
 import entity.Item;
 import entity.Person;
 import entity.Purchase;
+import exception.DBException;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
@@ -20,8 +26,18 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
-    public int createItem(Item item) {
-        return 0;
+    public long createItem(Item item) {
+        try (Session session = DBService.getSession()){
+            Transaction transaction = session.beginTransaction();
+
+            ItemDAO dao = new ItemDAOImpl(session);
+            long id = dao.create(item);
+
+            transaction.commit();
+            return id;
+        } catch (HibernateException | NoResultException e) {
+            throw new DBException(e);
+        }
     }
 
     @Override
