@@ -19,7 +19,6 @@ public class ItemServlet extends HttpServlet {
             PersonService personService = new PersonServiceImpl();
             request.setAttribute("items", personService.getItems());
             request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
-            return;
         }
     }
 
@@ -30,7 +29,6 @@ public class ItemServlet extends HttpServlet {
             PersonService personService = new PersonServiceImpl();
             request.setAttribute("items", personService.getItems());
             request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
-            return;
         }
     }
 }

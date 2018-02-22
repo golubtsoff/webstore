@@ -30,11 +30,16 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person signUp(String name, String password) {
+        return this.signUp(name, password, Role.user);
+    }
+
+    @Override
+    public Person signUp(String name, String password, Role role) {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();
 
             PersonDAO dao = new PersonDAOImpl(session);
-            Long id = dao.create(new Person(name, password, Role.user));
+            Long id = dao.create(new Person(name, password, role));
             Person person = dao.get(id);
 
             transaction.commit();
