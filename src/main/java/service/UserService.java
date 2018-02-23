@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface UserService extends PersonService {
 
-    long setPurchase(Item item, int amount);
+    long setPurchase(long itemId, int amount);
 }

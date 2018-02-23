@@ -41,19 +41,18 @@ public class Purchase {
     public Purchase() {
     }
 
-    public Purchase(Person person, Item item, LocalDateTime dateTime, BigDecimal cost, int amount) {
-        this(null, person, item, dateTime, cost, amount);
+    public Purchase(Person person, Item item, LocalDateTime dateTime, int amount) {
+        this(null, person, item, dateTime, amount);
     }
 
-    public Purchase(Long id, Person person, Item item, LocalDateTime dateTime, BigDecimal cost, int amount) {
+    public Purchase(Long id, Person person, Item item, LocalDateTime dateTime, int amount) {
         this.id = id;
         this.person = person;
         this.item = item;
         this.dateTime = dateTime;
-        this.cost = cost;
+        this.cost = item.getPrice().multiply(new BigDecimal(amount));
         this.amount = amount;
     }
-
 
     public long getId() {
         return id;
