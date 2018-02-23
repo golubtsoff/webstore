@@ -1,4 +1,4 @@
-package test;
+package test.entity;
 
 import dao.DBService;
 import dao.ItemDAO;
@@ -7,6 +7,7 @@ import entity.Item;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -18,13 +19,13 @@ public class ItemTest {
             Transaction transaction = session.beginTransaction();
 
             ItemDAO dao = new ItemDAOImpl(session);
-            Item i1 = new Item("Самолёт", "Модель на радиоуправлении", 1000, 5);
-            Item i2 = new Item("Танк", "Конструктор для сборки танка", 999.99, 3);
+            Item i1 = new Item("Самолёт", "Модель на радиоуправлении", new BigDecimal(1000), 5);
+            Item i2 = new Item("Танк", "Конструктор для сборки танка", new BigDecimal(999.99), 3);
             long id1 = dao.create(i1);
             long id2 = dao.create(i2);
             Item i3 = dao.get(id1);
             System.out.println(i3);
-            i3.setPrice(2000);
+            i3.setPrice(new BigDecimal(2000));
             dao.update(i3);
             System.out.println(i3);
             List<Item> items = dao.getAll();

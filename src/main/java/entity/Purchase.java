@@ -3,6 +3,7 @@ package entity;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -31,7 +32,7 @@ public class Purchase {
 
     @NotNull
     @Column(name = "COST")
-    private double cost;
+    private BigDecimal cost;
 
     @NotNull
     @Column(name = "AMOUNT")
@@ -40,11 +41,11 @@ public class Purchase {
     public Purchase() {
     }
 
-    public Purchase(Person person, Item item, LocalDateTime dateTime, double cost, int amount) {
+    public Purchase(Person person, Item item, LocalDateTime dateTime, BigDecimal cost, int amount) {
         this(null, person, item, dateTime, cost, amount);
     }
 
-    public Purchase(Long id, Person person, Item item, LocalDateTime dateTime, double cost, int amount) {
+    public Purchase(Long id, Person person, Item item, LocalDateTime dateTime, BigDecimal cost, int amount) {
         this.id = id;
         this.person = person;
         this.item = item;
@@ -70,7 +71,7 @@ public class Purchase {
         return dateTime;
     }
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 

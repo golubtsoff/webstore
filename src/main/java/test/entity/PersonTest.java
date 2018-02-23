@@ -1,4 +1,4 @@
-package test;
+package test.entity;
 
 import dao.*;
 import entity.Person;

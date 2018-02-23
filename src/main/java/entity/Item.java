@@ -3,6 +3,7 @@ package entity;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Created by Evgeniy Golubtsov on 09.02.2018.
@@ -24,18 +25,18 @@ public class Item {
     private String description;
 
     @Column(name = "PRICE")
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "AMOUNT")
     private int amount;
 
     public Item(){}
 
-    public Item(String title, String description, double price, int amount) {
+    public Item(String title, String description, BigDecimal price, int amount) {
         this(null, title, description, price, amount);
     }
 
-    public Item(Long id, @NotNull String title, String description, double price, int amount) {
+    public Item(Long id, @NotNull String title, String description, BigDecimal price, int amount) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -64,11 +65,11 @@ public class Item {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

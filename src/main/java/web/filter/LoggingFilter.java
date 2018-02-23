@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class LoggingFilter implements Filter {
         // sign up person
         PersonService personService = new PersonServiceImpl();
         personService.signUp("root", "123", Role.admin);
-        Person person = personService.signUp("user", "345");
+        personService.signUp("user", "345");
     }
 
     private void addItems() {
@@ -63,15 +64,16 @@ public class LoggingFilter implements Filter {
         Person personAdmin = personService.signUp("admin", "111");
         AdminService adminService = new AdminServiceImpl(personAdmin);
         List<Item> items = new ArrayList<>();
-        items.add(new Item("Танк", "Конструктор для сборки модели танка", 1000, 10));
-        items.add(new Item("Велосипед", "Спортивный велосипед для поездки по пересечённой местности", 9999.99, 3));
-        items.add(new Item("Воздушный шар", "Шары надувные разноцветные", 10.5, 265));
+        items.add(new Item("Танк", "Конструктор для сборки модели танка", new BigDecimal(1000), 10));
+        items.add(new Item("Велосипед", "Спортивный велосипед для поездки по пересечённой местности", new BigDecimal(9999.99), 3));
+        items.add(new Item("Воздушный шар", "Шары надувные разноцветные", new BigDecimal(10.5), 265));
         for (Item item : items) {
             Long id = adminService.createItem(item);
             if (id == 1L){
                 adminService.deleteItem(id);
             }
         }
+
     }
 }
 

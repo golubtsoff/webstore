@@ -1,4 +1,4 @@
-package test;
+package test.entity;
 
 import dao.*;
 import entity.Item;
@@ -7,6 +7,7 @@ import entity.Purchase;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,11 +29,11 @@ public class PurchaseTest {
             personDAO.create(p1);
             p1 = personDAO.get(1L);
 
-            Item i1 = new Item("Самолёт", "Модель на радиоуправлении", 1000, 5);
+            Item i1 = new Item("Самолёт", "Модель на радиоуправлении", new BigDecimal(1000), 5);
             itemDAO.create(i1);
             i1 = itemDAO.get(1);
 
-            Purchase pr1 = new Purchase(p1, i1, LocalDateTime.now(), i1.getPrice() * 2, 2);
+            Purchase pr1 = new Purchase(p1, i1, LocalDateTime.now(), i1.getPrice().multiply(new BigDecimal(2)), 2);
             purchaseDAO.create(pr1);
             Purchase pr2 = purchaseDAO.get(1L);
             System.out.println(pr2);

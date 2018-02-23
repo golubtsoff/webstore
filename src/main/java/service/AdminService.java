@@ -12,6 +12,8 @@ public interface AdminService extends PersonService {
 
     long createItem(Item item);
 
+    Item getItem(long id);
+
     void updateItem(Item item);
 
     void deleteItem(long id);
