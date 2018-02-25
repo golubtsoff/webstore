@@ -26,15 +26,15 @@
     <c:if test="${role == 'admin'}">
         <%--<a href="items?action=add"><img src="img/add.png"></a>--%>
         <a href="item?id=${item.id}&action=edit">Edit</a>
-        <br />
+        <br/>
     </c:if>
     <c:if test="${role == 'user'}">
         <%--<a href="items?action=add"><img src="img/add.png"></a>--%>
         <a href="item?id=${item.id}&action=buy">Buy</a>
-        <br />
+        <br/>
     </c:if>
-    <hr />
-    <table cellpadding="2" >
+    <hr/>
+    <table cellpadding="2">
         <tr>
             <td><strong>Description</strong></td>
             <td>${item.description}</td>
@@ -42,14 +42,17 @@
         <tr>
             <td><strong>Price</strong></td>
             <%--<td>${item.price}</td>--%>
-            <td><%=CurrencyFormat.format(item.getPrice())%></td>
+            <td><%=CurrencyFormat.format(item.getPrice())%>
+            </td>
         </tr>
-        <tr>
-            <td><strong>Amount</strong></td>
-            <td>${item.amount}</td>
-        </tr>
+        <c:if test="${role == 'admin'}">
+            <tr>
+                <td><strong>Amount</strong></td>
+                <td>${item.amount}</td>
+            </tr>
+        </c:if>
     </table>
-    <hr />
+    <hr/>
     <button onclick="window.history.back()">Back</button>
 </section>
 </body>

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-
+// TODO fix the error of removing the purchased product
 public class ItemServlet extends HttpServlet {
 
     @Override

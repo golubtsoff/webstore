@@ -39,7 +39,9 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public void delete(long id) {
-        Item item = session.byId(Item.class).getReference(id);
+//        Item item = session.byId(Item.class).getReference(id);
+        Item item = session.byId(Item.class).load(id);
         session.delete(item);
+//        session.remove(item);
     }
 }
