@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="util.CurrencyFormat" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -44,7 +45,8 @@
             <jsp:useBean id="item" type="entity.Item"/>
             <tr>
                 <td><a href="item?id=${item.id}&action=view">${item.title}</a></td>
-                <td>${item.price}</td>
+                <%--<td>${item.price}</td>--%>
+                <td><%=CurrencyFormat.format(item.getPrice())%></td>
                 <c:if test="${role == 'admin'}">
                     <%--<td><a href="item?id=${item.id}&action=delete"><img src="img/delete.png"></a></td>--%>
                     <%--<td><a href="item?id=${item.id}&action=edit"><img src="img/pencil.png"></a></td>--%>

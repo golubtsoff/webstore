@@ -1,4 +1,4 @@
-<%@ page import="util.DateUtil" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: golubtsov
   Date: 16.02.2018
@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="util.DateUtil" %>
+<%@ page import="util.CurrencyFormat" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -40,7 +42,8 @@
                     <td><a href="item?id=${purchase.item.id}&action=view">${purchase.item.title}</a></td>
                     <%--<td>${purchase.dateTime}</td>--%>
                     <td><%=DateUtil.format(purchase.getDateTime())%></td>
-                    <td>${purchase.cost}</td>
+                    <%--<td>${purchase.cost}</td>--%>
+                    <td><%=CurrencyFormat.format(purchase.getCost())%></td>
                     <td>${purchase.amount}</td>
                 </tr>
             </c:forEach>

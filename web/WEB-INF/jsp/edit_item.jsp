@@ -1,4 +1,4 @@
-<%--
+<%@ page import="util.CurrencyFormat" %><%--
   Created by IntelliJ IDEA.
   User: golubtsov
   Date: 16.02.2018
@@ -11,6 +11,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <jsp:useBean id="item" scope="request" type="entity.Item"/>
+    <style>
+        .currencyinput {
+            border: 1px inset #ccc;
+        }
+        .currencyinput input {
+            border: 0;
+        }
+    </style>
     <title>${item.title} - Webstore</title>
 </head>
 <body>
@@ -36,7 +44,9 @@
                 </tr>
                 <tr>
                     <td><strong>Price</strong></td>
-                    <td><input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0"></td>
+                    <%--<span class="currencyinput">$<input type="text" name="currency"></span>--%>
+                    <%--<td><%=CurrencyFormat.getCurrency()%><input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0"></td>--%>
+                    <td><span class="currencyinput"><%=CurrencyFormat.getCurrency()%><input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0"></span></td>
                 </tr>
                 <tr>
                     <td><strong>Amount</strong></td>

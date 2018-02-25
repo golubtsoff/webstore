@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="util.CurrencyFormat" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -40,7 +41,8 @@
         </tr>
         <tr>
             <td><strong>Price</strong></td>
-            <td>${item.price}</td>
+            <%--<td>${item.price}</td>--%>
+            <td><%=CurrencyFormat.format(item.getPrice())%></td>
         </tr>
         <tr>
             <td><strong>Amount</strong></td>
