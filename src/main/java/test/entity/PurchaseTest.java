@@ -33,7 +33,7 @@ public class PurchaseTest {
             itemDAO.create(i1);
             i1 = itemDAO.get(1);
 
-            Purchase pr1 = new Purchase(p1, i1, LocalDateTime.now(), i1.getPrice().multiply(new BigDecimal(2)), 2);
+            Purchase pr1 = new Purchase(p1, i1, LocalDateTime.now(), 2);
             purchaseDAO.create(pr1);
             Purchase pr2 = purchaseDAO.get(1L);
             System.out.println(pr2);

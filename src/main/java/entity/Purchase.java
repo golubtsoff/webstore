@@ -19,11 +19,11 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private Person person;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ITEM_ID", nullable = false)
     private Item item;
 
@@ -70,6 +70,7 @@ public class Purchase {
         return dateTime;
     }
 
+    @NotNull
     public BigDecimal getCost() {
         return cost;
     }

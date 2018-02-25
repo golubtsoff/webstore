@@ -3,10 +3,7 @@ package web.filter;
 import entity.Item;
 import entity.Person;
 import entity.Role;
-import service.AdminService;
-import service.AdminServiceImpl;
-import service.PersonService;
-import service.PersonServiceImpl;
+import service.*;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -33,6 +30,7 @@ public class LoggingFilter implements Filter {
         if (session != null && session.getAttribute("person") != null) {
 //            chain.doFilter(request, response);
             request.getRequestDispatcher("/items").forward(request, response);
+
         } else {
 //            request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
             request.getRequestDispatcher("/signin").forward(request, response);
@@ -45,6 +43,7 @@ public class LoggingFilter implements Filter {
 //        TODO remove in production
         addPersons();
         addItems();
+        addPurchases();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class LoggingFilter implements Filter {
     private void addItems() {
         PersonService personService = new PersonServiceImpl();
         Person personAdmin = personService.signUp("admin", "111");
-        AdminService adminService = new AdminServiceImpl(personAdmin);
+        AdminService adminService = new AdminServiceImpl();
         List<Item> items = new ArrayList<>();
         items.add(new Item("Танк", "Конструктор для сборки модели танка", new BigDecimal(1000), 10));
         items.add(new Item("Велосипед", "Спортивный велосипед для поездки по пересечённой местности", new BigDecimal(9999.99), 3));
@@ -74,6 +73,21 @@ public class LoggingFilter implements Filter {
             }
         }
 
+    }
+
+    private void addPurchases(){
+        PersonService personService = new PersonServiceImpl();
+        Person person = personService.signUp("user2", "secret");
+        AdminService adminService = new AdminServiceImpl();
+        Item item = new Item(
+                "Космический шаттл",
+                "Конструктор для сборки комического корабля",
+                new BigDecimal(10000.01),
+                5);
+        Long itemId = adminService.createItem(item);
+
+        UserService userService = new UserServiceImpl(person);
+        userService.setPurchase(itemId, 3);
     }
 }
 

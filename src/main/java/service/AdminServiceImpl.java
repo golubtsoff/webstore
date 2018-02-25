@@ -19,10 +19,7 @@ import java.util.List;
 //TODO implement methods
 public class AdminServiceImpl extends PersonServiceImpl implements AdminService {
 
-    private Person person;
-
-    public AdminServiceImpl(Person person){
-        this.person = person;
+    public AdminServiceImpl(){
     }
 
     @Override

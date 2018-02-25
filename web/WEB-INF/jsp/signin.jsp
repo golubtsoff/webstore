@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Sign in</title>
+    <title>Sign in - Webstore</title>
 </head>
 <body>
 <form method="POST" action="signin">
