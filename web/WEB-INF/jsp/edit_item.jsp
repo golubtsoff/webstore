@@ -22,30 +22,31 @@
 <section>
     <c:set var="role" scope="request" value="${person.role}"/>
     <c:if test="${role == 'admin'}">
-    <form method="post" action="item" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" name="id" value="${item.id}">
-        <table cellpadding="2" >
-            <tr>
-                <td><strong>Title</strong></td>
-                <td><input type="text" name="title" size=30 value="${item.title}"></td>
-            </tr>
-            <tr>
-                <td><strong>Description</strong></td>
-                <td><textarea name=description" id="description" cols="30" rows="10">${item.description}</textarea></td>
-            </tr>
-            <tr>
-                <td><strong>Price</strong></td>
-                <td><input type="number" name="price" size=30 value="${item.price}"></td>
-            </tr>
-            <tr>
-                <td><strong>Amount</strong></td>
-                <td><input type="number" name="amount" size=30 value="${item.amount}"></td>
-            </tr>
-        </table>
-        <hr />
-        <button type="submit">Save</button>
-        <button type="button" onclick="window.history.back()">Cancel</button>
-    </form>
+        <form method="post" action="items" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="id" value="${item.id}">
+            <table cellpadding="2">
+                <tr>
+                    <td><strong>Title</strong></td>
+                    <td><input required type="text" name="title" size=30 value="${item.title}"></td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td><textarea name="description" cols="30" rows="10">${item.description}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Price</strong></td>
+                    <td><input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Amount</strong></td>
+                    <td><input required type="number" name="amount" size=30 value="${item.amount}" min="0"></td>
+                </tr>
+            </table>
+            <hr/>
+            <button type="submit">Save</button>
+            <button type="button" onclick="window.history.back()">Cancel</button>
+        </form>
     </c:if>
 </section>
 </body>

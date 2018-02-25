@@ -39,7 +39,8 @@ public class SignInServlet extends HttpServlet {
 
         if (person != null) {
             request.getSession(true).setAttribute("person", person);
-            request.getRequestDispatcher("/items").forward(request, response);
+//            request.getRequestDispatcher("/items").forward(request, response);
+            response.sendRedirect("items");
         } else {
             response.setContentType("text/plain;charset=utf-8");
             response.getWriter().println("Unauthorized");

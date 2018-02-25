@@ -18,11 +18,11 @@
         </tr>
         <tr>
             <td>Login:</td>
-            <td><input name="login"/></td>
+            <td><input required type="text" name="login"/></td>
         </tr>
         <tr>
             <td>Password:</td>
-            <td><input type="password" name="password"/></td>
+            <td><input required type="password" name="password"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Sign in"/></td>

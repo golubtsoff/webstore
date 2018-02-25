@@ -3,6 +3,7 @@ package web;
 import entity.Item;
 import entity.Person;
 import entity.Role;
+import exception.ServiceException;
 import org.hibernate.Session;
 import service.AdminService;
 import service.AdminServiceImpl;
@@ -24,11 +25,30 @@ public class ItemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        if (action == null) {
-            PersonService personService = new PersonServiceImpl();
-            request.setAttribute("items", personService.getItems());
-            request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
+        Long id = Long.parseLong(request.getParameter("id"));
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        BigDecimal price = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
+        Integer amount = Integer.parseInt(request.getParameter("amount"));
+
+        if (id == null || title == null || price == null || amount == null){
+            throw new ServiceException("Error added items.");
         }
+
+        Item item = new Item(id, title, description, price, amount);
+        AdminService adminService = new AdminServiceImpl();
+        if (item.getId() > 0){
+            adminService.updateItem(item);
+        } else {
+            adminService.createItem(item);
+        }
+        response.sendRedirect("items");
+
+//        if (action == null) {
+//            PersonService personService = new PersonServiceImpl();
+//            request.setAttribute("items", personService.getItems());
+//            request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
+//        }
     }
 
     @Override
