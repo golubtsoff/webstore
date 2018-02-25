@@ -31,7 +31,7 @@ public class LogoutFilter implements Filter {
 
         if (session != null && session.getAttribute("person") != null) {
             session.removeAttribute("person");
-            req.getRequestDispatcher("/signin").forward(request, response);
+            res.sendRedirect("signin");
         } else {
             chain.doFilter(request, response);
         }

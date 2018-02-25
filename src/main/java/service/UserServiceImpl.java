@@ -38,6 +38,9 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             PurchaseDAO purchaseDAO = new PurchaseDAOImpl(session);
             Long purchaseId = purchaseDAO.create(purchase);
 
+            item.setAmount(item.getAmount() - amount);
+            itemDAO.update(item);
+
             transaction.commit();
             return purchaseId;
         } catch (HibernateException | NoResultException e) {

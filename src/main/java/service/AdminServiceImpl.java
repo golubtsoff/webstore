@@ -38,18 +38,6 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
-    public Item getItem(long id) {
-        try (Session session = DBService.getSession()){
-
-            ItemDAO dao = new ItemDAOImpl(session);
-            return dao.get(id);
-
-        } catch (HibernateException | NoResultException e) {
-            throw new DBException(e);
-        }
-    }
-
-    @Override
     public void updateItem(Item item) {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();

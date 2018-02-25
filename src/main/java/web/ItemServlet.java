@@ -5,10 +5,7 @@ import entity.Person;
 import entity.Role;
 import exception.ServiceException;
 import org.hibernate.Session;
-import service.AdminService;
-import service.AdminServiceImpl;
-import service.PersonService;
-import service.PersonServiceImpl;
+import service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -53,26 +50,31 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if (action == null) {
-            PersonService personService = new PersonServiceImpl();
-            request.setAttribute("items", personService.getItems());
-            request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
-        }
-
         HttpSession session = request.getSession(false);
         Person person = (Person) session.getAttribute("person");
+        String action = request.getParameter("action");
+        PersonService personService = new PersonServiceImpl();
+        if (action == null) {
+            request.setAttribute("items", personService.getItems(person));
+            request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
+            return;
+        }
+
         String itemIdString = request.getParameter("id");
         Long itemId = itemIdString == null ? null : Long.parseLong(itemIdString);
+
+        if (action.equalsIgnoreCase("view")){
+            Item item = personService.getItem(itemId);
+            request.setAttribute("item", item);
+            request.getRequestDispatcher("/WEB-INF/jsp/view_item.jsp").forward(request, response);
+            return;
+        }
+
         if (person.getRole() == Role.admin){
             AdminService adminService = new AdminServiceImpl();
             if (action.equalsIgnoreCase("delete")){
                 adminService.deleteItem(itemId);
                 response.sendRedirect("items");
-            } else if (action.equalsIgnoreCase("view")){
-                Item item = adminService.getItem(itemId);
-                request.setAttribute("item", item);
-                request.getRequestDispatcher("/WEB-INF/jsp/view_item.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("edit")){
                 Item item = adminService.getItem(itemId);
                 request.setAttribute("item", item);
@@ -84,6 +86,16 @@ public class ItemServlet extends HttpServlet {
             } else {
                 throw new IllegalArgumentException("Action " + action + " is illegal");
             }
+        } else if (person.getRole() == Role.user){
+            UserService userService = new UserServiceImpl(person);
+            if (action.equalsIgnoreCase("buy")){
+                userService.setPurchase(itemId, 1);
+                response.sendRedirect("items");
+            } else {
+                throw new IllegalArgumentException("Action " + action + " is illegal");
+            }
+        } else {
+            throw new ServiceException("Unknown person's role");
         }
     }
 }

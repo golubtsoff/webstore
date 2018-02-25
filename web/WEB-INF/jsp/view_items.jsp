@@ -33,11 +33,11 @@
         <tr>
             <th>Item</th>
             <th>Price</th>
-            <th>Amount</th>
-            <th></th>
             <c:if test="${role == 'admin'}">
+                <th>Amount</th>
                 <th></th>
             </c:if>
+            <th></th>
         </tr>
         <jsp:useBean id="items" scope="request" type="java.util.List"/>
         <c:forEach items="${items}" var="item">
@@ -45,10 +45,10 @@
             <tr>
                 <td><a href="item?id=${item.id}&action=view">${item.title}</a></td>
                 <td>${item.price}</td>
-                <td>${item.amount}</td>
                 <c:if test="${role == 'admin'}">
                     <%--<td><a href="item?id=${item.id}&action=delete"><img src="img/delete.png"></a></td>--%>
                     <%--<td><a href="item?id=${item.id}&action=edit"><img src="img/pencil.png"></a></td>--%>
+                    <td>${item.amount}</td>
                     <td><a href="item?id=${item.id}&action=delete">Delete</a></td>
                     <td><a href="item?id=${item.id}&action=edit">Edit</a></td>
                 </c:if>

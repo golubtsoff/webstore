@@ -64,7 +64,7 @@ public class LoggingFilter implements Filter {
         AdminService adminService = new AdminServiceImpl();
         List<Item> items = new ArrayList<>();
         items.add(new Item("Танк", "Конструктор для сборки модели танка", new BigDecimal(1000), 10));
-        items.add(new Item("Велосипед", "Спортивный велосипед для поездки по пересечённой местности", new BigDecimal(9999.99), 3));
+        items.add(new Item("Велосипед", "Спортивный велосипед для поездки по пересечённой местности", new BigDecimal(9999.99), 1));
         items.add(new Item("Воздушный шар", "Шары надувные разноцветные", new BigDecimal(10.5), 265));
         for (Item item : items) {
             Long id = adminService.createItem(item);

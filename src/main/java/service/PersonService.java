@@ -17,5 +17,7 @@ public interface PersonService {
 
     Person signUp(String name, String password, Role role);
 
-    List<Item> getItems();
+    Item getItem(long id);
+
+    List<Item> getItems(Person person);
 }

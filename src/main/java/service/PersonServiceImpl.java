@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Evgeniy Golubtsov on 18.02.2018.
@@ -50,12 +51,28 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
+    @Override
+    public Item getItem(long id) {
+        try (Session session = DBService.getSession()){
+
+            ItemDAO dao = new ItemDAOImpl(session);
+            return dao.get(id);
+
+        } catch (HibernateException | NoResultException e) {
+            throw new DBException(e);
+        }
+    }
 
     @Override
-    public List<Item> getItems() {
+    public List<Item> getItems(Person person) {
         try (Session session = DBService.getSession()){
             ItemDAO dao = new ItemDAOImpl(session);
-            return dao.getAll();
+            List<Item> items = dao.getAll();
+            if (person.getRole() == Role.admin){
+                return items;
+            } else {
+                return items.stream().filter((item) -> item.getAmount() > 0).collect(Collectors.toList());
+            }
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
         }
