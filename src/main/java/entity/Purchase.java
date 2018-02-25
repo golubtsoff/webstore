@@ -1,5 +1,7 @@
 package entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -24,7 +26,8 @@ public class Purchase {
     private Person person;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ITEM_ID", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "ITEM_ID", nullable = true)
     private Item item;
 
     @Column(name = "DATETIME")
