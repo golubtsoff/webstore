@@ -1,19 +1,15 @@
 package web;
 
 import entity.Person;
-import entity.Role;
 import exception.DBException;
 import service.PersonService;
 import service.PersonServiceImpl;
-import service.UserService;
-import service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 public class SignUpServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;

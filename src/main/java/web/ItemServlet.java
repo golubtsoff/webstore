@@ -4,7 +4,6 @@ import entity.Item;
 import entity.Person;
 import entity.Role;
 import exception.ServiceException;
-import org.hibernate.Session;
 import service.*;
 
 import javax.servlet.ServletException;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-// TODO implementation doGet and doPost
 public class ItemServlet extends HttpServlet {
 
     @Override

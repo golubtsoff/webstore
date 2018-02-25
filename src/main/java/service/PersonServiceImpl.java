@@ -8,6 +8,7 @@ import exception.DBException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import util.DBService;
 
 import javax.persistence.NoResultException;
 import java.util.List;

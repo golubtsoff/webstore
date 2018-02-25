@@ -2,12 +2,12 @@ package service;
 
 import dao.*;
 import entity.Item;
-import entity.Person;
 import entity.Purchase;
 import exception.DBException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import util.DBService;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.List;
  * Created by Evgeniy Golubtsov on 12.02.2018.
  */
 
-//TODO implement methods
 public class AdminServiceImpl extends PersonServiceImpl implements AdminService {
 
     public AdminServiceImpl(){

@@ -1,9 +1,7 @@
 package web;
 
-import entity.Item;
 import entity.Person;
 import exception.DBException;
-import org.hibernate.Session;
 import service.PersonService;
 import service.PersonServiceImpl;
 
@@ -12,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 public class SignInServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;

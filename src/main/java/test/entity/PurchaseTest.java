@@ -6,6 +6,7 @@ import entity.Person;
 import entity.Purchase;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import util.DBService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

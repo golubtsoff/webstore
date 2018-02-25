@@ -1,4 +1,4 @@
-<%--
+<%@ page import="util.DateUtil" %><%--
   Created by IntelliJ IDEA.
   User: golubtsov
   Date: 16.02.2018
@@ -38,7 +38,8 @@
                 <tr>
                     <td>${purchase.person.login}</td>
                     <td><a href="item?id=${purchase.item.id}&action=view">${purchase.item.title}</a></td>
-                    <td>${purchase.dateTime}</td>
+                    <%--<td>${purchase.dateTime}</td>--%>
+                    <td><%=DateUtil.format(purchase.getDateTime())%></td>
                     <td>${purchase.cost}</td>
                     <td>${purchase.amount}</td>
                 </tr>

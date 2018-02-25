@@ -1,6 +1,6 @@
 package test.entity;
 
-import dao.DBService;
+import util.DBService;
 import dao.ItemDAO;
 import dao.ItemDAOImpl;
 import entity.Item;

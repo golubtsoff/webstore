@@ -1,4 +1,4 @@
-package dao;
+package util;
 
 import entity.Item;
 import entity.Person;

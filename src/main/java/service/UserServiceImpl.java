@@ -9,15 +9,15 @@ import exception.ServiceException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import util.DBService;
 
 import javax.persistence.NoResultException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Created by Evgeniy Golubtsov on 12.02.2018.
  */
-//TODO implement methods
+
 public class UserServiceImpl extends PersonServiceImpl implements UserService {
 
     private Person person;
