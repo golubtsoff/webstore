@@ -11,6 +11,7 @@ import util.DBService;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.*;
 
@@ -35,13 +36,13 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 //            globalLogger.removeHandler(handler);
 //        }
 
-        LogManager.getLogManager().reset();
-        Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        globalLogger.setLevel(Level.OFF);
+//        LogManager.getLogManager().reset();
+//        Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+//        globalLogger.setLevel(Level.OFF);
 
         try {
             logger.setUseParentHandlers(false);
-            logger.addHandler(new FileHandler("webstore.log", 1000, 10, true));
+            logger.addHandler(new FileHandler("webstore.log", 1_000_000, 10, true));
             logger.setLevel(Level.FINE);
         } catch (IOException e) {
             e.printStackTrace();
