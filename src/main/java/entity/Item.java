@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Created by Evgeniy Golubtsov on 09.02.2018.
@@ -42,7 +43,7 @@ public class Item {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.price = price;
+        this.price = price.setScale(2, RoundingMode.CEILING);
         this.amount = amount;
     }
 

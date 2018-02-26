@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 /**
@@ -53,7 +54,7 @@ public class Purchase {
         this.person = person;
         this.item = item;
         this.dateTime = dateTime;
-        this.cost = item.getPrice().multiply(new BigDecimal(amount));
+        this.cost = item.getPrice().multiply(new BigDecimal(amount).setScale(0, RoundingMode.CEILING));
         this.amount = amount;
     }
 

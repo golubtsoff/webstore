@@ -11,7 +11,13 @@ import org.hibernate.Transaction;
 import util.DBService;
 
 import javax.persistence.NoResultException;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -19,6 +25,20 @@ import java.util.stream.Collectors;
  */
 
 public class PersonServiceImpl implements PersonService {
+
+    private static Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
+
+    static {
+        try {
+            logger.setUseParentHandlers(false);
+            FileHandler fileHandler = new FileHandler("webstore.log", 1000, 10, true);
+
+            logger.addHandler(fileHandler);
+            logger.setLevel(Level.FINE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Person signIn(String name, String password) {
@@ -45,6 +65,8 @@ public class PersonServiceImpl implements PersonService {
             Person person = dao.get(id);
 
             transaction.commit();
+
+            logger.fine("Person is registered: ");
 
             return person;
         } catch (HibernateException | NoResultException e) {
