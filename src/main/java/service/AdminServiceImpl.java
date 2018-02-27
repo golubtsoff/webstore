@@ -23,31 +23,31 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     private static Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
 
-    static {
-//        Logger globalLogger = LogManager.getLogManager().getLogger("");
-//        globalLogger.setLevel(Level.INFO);
-//        for (Handler handler : globalLogger.getHandlers()) {
-//            handler.setLevel(Level.FINE);
-//        }
+//    static {
+////        Logger globalLogger = LogManager.getLogManager().getLogger("");
+////        globalLogger.setLevel(Level.INFO);
+////        for (Handler handler : globalLogger.getHandlers()) {
+////            handler.setLevel(Level.FINE);
+////        }
+////
+////        Logger globalLogger = Logger.getLogger("");
+////        Handler[] handlers = globalLogger.getHandlers();
+////        for(Handler handler : handlers) {
+////            globalLogger.removeHandler(handler);
+////        }
 //
-//        Logger globalLogger = Logger.getLogger("");
-//        Handler[] handlers = globalLogger.getHandlers();
-//        for(Handler handler : handlers) {
-//            globalLogger.removeHandler(handler);
+////        LogManager.getLogManager().reset();
+////        Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+////        globalLogger.setLevel(Level.OFF);
+//
+//        try {
+//            logger.setUseParentHandlers(false);
+//            logger.addHandler(new FileHandler("webstore.log", 1_000_000, 10, true));
+//            logger.setLevel(Level.FINE);
+//        } catch (IOException e) {
+//            e.printStackTrace();
 //        }
-
-//        LogManager.getLogManager().reset();
-//        Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-//        globalLogger.setLevel(Level.OFF);
-
-        try {
-            logger.setUseParentHandlers(false);
-            logger.addHandler(new FileHandler("webstore.log", 1_000_000, 10, true));
-            logger.setLevel(Level.FINE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    }
 
     public AdminServiceImpl(){
     }
