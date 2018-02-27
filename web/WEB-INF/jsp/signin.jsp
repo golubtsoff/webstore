@@ -25,10 +25,15 @@
             <td><input required type="password" name="password"/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="Sign in"/></td>
-            <td><a href="signup">Sign up</a></td>
+            <td></td>
+            <td><input type="submit" value="Sign in"/>&nbsp;<a href="signup">Sign up</a></td>
         </tr>
     </table>
+    <c:if test="${not empty exception}">
+        <p style="color:red;">
+                ${exception}
+        </p>
+    </c:if>
 </form>
 </body>
 </html>

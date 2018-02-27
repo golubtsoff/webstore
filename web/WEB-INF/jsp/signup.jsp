@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Gauss
@@ -29,10 +30,15 @@
             <td><input required type="password" name="retype_password"/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="Sign up"/></td>
-            <td><a href="signin">Sign in</a></td>
+            <td></td>
+            <td><input type="submit" value="Sign up"/>&nbsp;<a href="signin">Sign in</a></td>
         </tr>
     </table>
+    <c:if test="${not empty exception}">
+        <p style="color:red;">
+            ${exception}
+        </p>
+    </c:if>
 </form>
 </body>
 </html>

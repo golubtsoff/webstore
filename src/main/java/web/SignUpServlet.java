@@ -25,6 +25,7 @@ public class SignUpServlet extends HttpServlet {
         if (login == null || password == null || retypePassword == null
                 || login.isEmpty() || password.isEmpty() || retypePassword.isEmpty()
                 || !password.equals(retypePassword)){
+            request.setAttribute("exception", "Not registered");
             request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp").forward(request, response);
             return;
         }
@@ -40,9 +41,7 @@ public class SignUpServlet extends HttpServlet {
         if (person != null) {
             request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
         } else {
-            response.setContentType("text/plain;charset=utf-8");
-            response.getWriter().println("Not registered");
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            request.setAttribute("exception", "Not registered");
             request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp").forward(request, response);
         }
     }

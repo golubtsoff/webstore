@@ -22,6 +22,8 @@ public class SignInServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()){
+            request.setAttribute("exception", "Not autorized");
+            request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
             return;
         }
 
@@ -35,12 +37,9 @@ public class SignInServlet extends HttpServlet {
 
         if (person != null) {
             request.getSession(true).setAttribute("person", person);
-//            request.getRequestDispatcher("/items").forward(request, response);
             response.sendRedirect("items");
         } else {
-            response.setContentType("text/plain;charset=utf-8");
-            response.getWriter().println("Unauthorized");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            request.setAttribute("exception", "Not autorized");
             request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
         }
     }
