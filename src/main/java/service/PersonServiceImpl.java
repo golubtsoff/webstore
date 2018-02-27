@@ -26,24 +26,14 @@ import java.util.stream.Collectors;
 
 public class PersonServiceImpl implements PersonService {
 
-//    private static Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
-//
-//    static {
-//        try {
-//            logger.setUseParentHandlers(false);
-//            FileHandler fileHandler = new FileHandler("webstore.log", 1000, 10, true);
-//
-//            logger.addHandler(fileHandler);
-//            logger.setLevel(Level.FINE);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private static Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
 
     @Override
     public Person signIn(String name, String password) {
         try (Session session = DBService.getSession()){
             PersonDAO dao = new PersonDAOImpl(session);
+            Person person = dao.getByName(name);
+            logger.fine("Person signed: " + person);
             return dao.getByName(name);
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
@@ -66,7 +56,7 @@ public class PersonServiceImpl implements PersonService {
 
             transaction.commit();
 
-//            logger.fine("Person is registered: ");
+            logger.fine("Person registered: " + person);
 
             return person;
         } catch (HibernateException | NoResultException e) {

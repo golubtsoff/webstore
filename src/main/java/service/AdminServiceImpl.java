@@ -23,32 +23,6 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     private static Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
 
-//    static {
-////        Logger globalLogger = LogManager.getLogManager().getLogger("");
-////        globalLogger.setLevel(Level.INFO);
-////        for (Handler handler : globalLogger.getHandlers()) {
-////            handler.setLevel(Level.FINE);
-////        }
-////
-////        Logger globalLogger = Logger.getLogger("");
-////        Handler[] handlers = globalLogger.getHandlers();
-////        for(Handler handler : handlers) {
-////            globalLogger.removeHandler(handler);
-////        }
-//
-////        LogManager.getLogManager().reset();
-////        Logger globalLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-////        globalLogger.setLevel(Level.OFF);
-//
-//        try {
-//            logger.setUseParentHandlers(false);
-//            logger.addHandler(new FileHandler("webstore.log", 1_000_000, 10, true));
-//            logger.setLevel(Level.FINE);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public AdminServiceImpl(){
     }
 
@@ -79,6 +53,8 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
             dao.update(item);
 
             transaction.commit();
+
+            logger.fine("Update item " + item);
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
         }
@@ -90,9 +66,11 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
             Transaction transaction = session.beginTransaction();
 
             ItemDAO dao = new ItemDAOImpl(session);
-            dao.delete(id);
+            Item item = dao.delete(id);
 
             transaction.commit();
+
+            logger.fine("Delete item " + item);
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
         }

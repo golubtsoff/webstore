@@ -13,12 +13,15 @@ import util.DBService;
 
 import javax.persistence.NoResultException;
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 /**
  * Created by Evgeniy Golubtsov on 12.02.2018.
  */
 
 public class UserServiceImpl extends PersonServiceImpl implements UserService {
+
+    private static Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
     private Person person;
 
@@ -37,11 +40,14 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             Purchase purchase = new Purchase(person, item, LocalDateTime.now(), amount);
             PurchaseDAO purchaseDAO = new PurchaseDAOImpl(session);
             Long purchaseId = purchaseDAO.create(purchase);
+            purchase = purchaseDAO.get(purchaseId);
 
             item.setAmount(item.getAmount() - amount);
             itemDAO.update(item);
 
             transaction.commit();
+
+            logger.fine("Item purchased: " + purchase);
             return purchaseId;
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
