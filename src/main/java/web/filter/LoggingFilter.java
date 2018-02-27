@@ -37,7 +37,7 @@ public class LoggingFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config){
 //        для тестового добавления пользователей
 //        TODO remove in production
         addPersons();
