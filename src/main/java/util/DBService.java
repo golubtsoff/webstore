@@ -10,15 +10,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 public class DBService {
@@ -49,36 +44,6 @@ public class DBService {
 
     public static Session getSession(){
         return sessionFactory.openSession();
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    private static Configuration getMySqlConfiguration() {
-        Configuration configuration = new Configuration();
-        addAnnotatedClassToConfiguration(configuration);
-
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
-        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/webstore?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8");
-        configuration.setProperty("hibernate.connection.username", "root");
-        configuration.setProperty("hibernate.connection.password", "");
-        configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
-        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
-        return configuration;
-    }
-
-    private static Configuration getH2Configuration() {
-        Configuration configuration = new Configuration();
-        addAnnotatedClassToConfiguration(configuration);
-
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:h2:./h2db");
-        configuration.setProperty("hibernate.connection.username", "test");
-        configuration.setProperty("hibernate.connection.password", "test");
-        configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
-        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
-
-        return configuration;
     }
 
     private static Configuration getConfiguration() throws ServiceException {
