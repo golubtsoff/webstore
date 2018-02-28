@@ -27,7 +27,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
-    public long createItem(Item item) {
+    public long createItem(Item item) throws DBException {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();
 
@@ -45,7 +45,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
-    public void updateItem(Item item) {
+    public void updateItem(Item item) throws DBException {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();
 
@@ -61,7 +61,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
-    public void deleteItem(long id) {
+    public void deleteItem(long id) throws DBException {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();
 
@@ -77,7 +77,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
-    public List<Purchase> getPurchases() {
+    public List<Purchase> getPurchases() throws DBException {
         try (Session session = DBService.getSession()){
             PurchaseDAO dao = new PurchaseDAOImpl(session);
             return dao.getAll();

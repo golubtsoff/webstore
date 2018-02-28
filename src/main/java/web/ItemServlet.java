@@ -38,12 +38,6 @@ public class ItemServlet extends HttpServlet {
             adminService.createItem(item);
         }
         response.sendRedirect("items");
-
-//        if (action == null) {
-//            PersonService personService = new PersonServiceImpl();
-//            request.setAttribute("items", personService.getItems());
-//            request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
-//        }
     }
 
     @Override

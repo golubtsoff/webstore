@@ -2,6 +2,7 @@ package service;
 
 import entity.Item;
 import entity.Purchase;
+import exception.DBException;
 
 import java.util.List;
 
@@ -10,11 +11,11 @@ import java.util.List;
  */
 public interface AdminService extends PersonService {
 
-    long createItem(Item item);
+    long createItem(Item item) throws DBException;
 
-    void updateItem(Item item);
+    void updateItem(Item item) throws DBException;
 
-    void deleteItem(long id);
+    void deleteItem(long id) throws DBException;
 
-    List<Purchase> getPurchases();
+    List<Purchase> getPurchases() throws DBException;
 }

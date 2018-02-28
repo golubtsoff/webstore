@@ -30,7 +30,7 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
     }
 
     @Override
-    public long setPurchase(long itemId, int amount) {
+    public long setPurchase(long itemId, int amount) throws DBException {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();
 

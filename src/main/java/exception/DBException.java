@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 /**
  * Created by Evgeniy Golubtsov on 18.02.2018.
  */
-public class DBException extends RuntimeException {
+public class DBException extends Exception {
 
     private static Logger logger = Logger.getLogger(DBException.class.getName());
 

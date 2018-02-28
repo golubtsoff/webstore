@@ -29,7 +29,7 @@ public class PersonServiceImpl implements PersonService {
     private static Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
 
     @Override
-    public Person signIn(String name, String password) {
+    public Person signIn(String name, String password) throws DBException {
         try (Session session = DBService.getSession()){
             PersonDAO dao = new PersonDAOImpl(session);
             Person person = dao.getByName(name);
@@ -41,12 +41,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person signUp(String name, String password) {
+    public Person signUp(String name, String password) throws DBException {
         return this.signUp(name, password, Role.user);
     }
 
     @Override
-    public Person signUp(String name, String password, Role role) {
+    public Person signUp(String name, String password, Role role) throws DBException {
         try (Session session = DBService.getSession()){
             Transaction transaction = session.beginTransaction();
 
@@ -65,7 +65,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Item getItem(long id) {
+    public Item getItem(long id) throws DBException {
         try (Session session = DBService.getSession()){
 
             ItemDAO dao = new ItemDAOImpl(session);
@@ -77,7 +77,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Item> getItems(Person person) {
+    public List<Item> getItems(Person person) throws DBException {
         try (Session session = DBService.getSession()){
             ItemDAO dao = new ItemDAOImpl(session);
             List<Item> items = dao.getAll();

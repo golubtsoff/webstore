@@ -3,6 +3,7 @@ package web.filter;
 import entity.Item;
 import entity.Person;
 import entity.Role;
+import exception.DBException;
 import service.*;
 
 import javax.servlet.*;
@@ -27,11 +28,9 @@ public class LoggingFilter implements Filter {
         HttpSession session = req.getSession(false);
 
         if (session != null && session.getAttribute("person") != null) {
-//            chain.doFilter(request, response);
             request.getRequestDispatcher("/items").forward(request, response);
 
         } else {
-//            request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
             request.getRequestDispatcher("/signin").forward(request, response);
         }
     }
@@ -40,9 +39,13 @@ public class LoggingFilter implements Filter {
     public void init(FilterConfig config){
 //        для тестового добавления пользователей
 //        TODO remove in production
-        addPersons();
-        addItems();
-        addPurchases();
+        try {
+            addPersons();
+            addItems();
+            addPurchases();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -50,16 +53,16 @@ public class LoggingFilter implements Filter {
 
     }
 
-    private void addPersons() {
+    private void addPersons() throws DBException {
         // sign up person
         PersonService personService = new PersonServiceImpl();
         personService.signUp("root", "123", Role.admin);
         personService.signUp("user", "345");
     }
 
-    private void addItems() {
+    private void addItems() throws DBException {
         PersonService personService = new PersonServiceImpl();
-        Person personAdmin = personService.signUp("admin", "111");
+        personService.signUp("alice", "111");
         AdminService adminService = new AdminServiceImpl();
         List<Item> items = new ArrayList<>();
         items.add(new Item("Танк", "Конструктор для сборки модели танка", new BigDecimal(1000), 10));
@@ -74,7 +77,7 @@ public class LoggingFilter implements Filter {
 
     }
 
-    private void addPurchases(){
+    private void addPurchases() throws DBException {
         PersonService personService = new PersonServiceImpl();
         Person person = personService.signUp("user2", "secret");
         AdminService adminService = new AdminServiceImpl();
