@@ -1,5 +1,6 @@
 package web;
 
+import exception.DBException;
 import service.AdminService;
 import service.AdminServiceImpl;
 
@@ -20,8 +21,12 @@ public class PurchaseServlet extends HttpServlet {
         String action = request.getParameter("action");
         if (action == null) {
             AdminService adminService = new AdminServiceImpl();
-            request.setAttribute("purchases", adminService.getPurchases());
-            request.getRequestDispatcher("/WEB-INF/jsp/view_purchases.jsp").forward(request, response);
+            try {
+                request.setAttribute("purchases", adminService.getPurchases());
+                request.getRequestDispatcher("/WEB-INF/jsp/view_purchases.jsp").forward(request, response);
+            } catch (DBException e) {
+                response.sendRedirect("error");
+            }
         }
     }
 }

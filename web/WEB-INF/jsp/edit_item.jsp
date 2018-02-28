@@ -1,4 +1,4 @@
-<%@ page import="util.CurrencyFormat" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: golubtsov
   Date: 16.02.2018
@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="util.CurrencyFormat" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -44,8 +45,6 @@
                 </tr>
                 <tr>
                     <td><strong>Price</strong></td>
-                    <%--<span class="currencyinput">$<input type="text" name="currency"></span>--%>
-                    <%--<td><%=CurrencyFormat.getCurrency()%><input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0"></td>--%>
                     <td><span class="currencyinput"><%=CurrencyFormat.getCurrency()%><input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0"></span></td>
                 </tr>
                 <tr>
@@ -57,6 +56,11 @@
             <button type="submit">Save</button>
             <button type="button" onclick="window.history.back()">Cancel</button>
         </form>
+        <c:if test="${not empty exception}">
+            <p style="color:red;">
+                    ${exception}
+            </p>
+        </c:if>
     </c:if>
 </section>
 </body>

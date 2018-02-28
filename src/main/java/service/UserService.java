@@ -4,6 +4,7 @@ import entity.Item;
 import entity.Person;
 import entity.Purchase;
 import exception.DBException;
+import exception.ServiceException;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
  */
 public interface UserService extends PersonService {
 
-    long setPurchase(long itemId, int amount) throws DBException;
+    long setPurchase(long itemId, int amount) throws DBException, ServiceException;
 }

@@ -3,6 +3,7 @@ package web;
 import entity.Item;
 import entity.Person;
 import entity.Role;
+import exception.DBException;
 import exception.ServiceException;
 import service.*;
 
@@ -13,31 +14,34 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-// TODO fix the error of removing the purchased product
+
 public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
-        Long id = Long.parseLong(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        BigDecimal price = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
-        Integer amount = Integer.parseInt(request.getParameter("amount"));
-
-        if (id == null || title == null || price == null || amount == null){
-            throw new ServiceException("Error added items.");
+        try {
+            request.setCharacterEncoding("UTF-8");
+            Item item = getItem(request);
+            AdminService adminService = new AdminServiceImpl();
+            if (item.getId() > 0) {
+                adminService.updateItem(item);
+            } else {
+                adminService.createItem(item);
+            }
+            response.sendRedirect("items");
+        } catch (ServiceException e) {
+            try {
+                request.setCharacterEncoding("UTF-8");
+                Item item = new Item(-1L, "", "", new BigDecimal(0), 0);
+                request.setAttribute("item", item);
+                request.setAttribute("exception", "Input data is not correct");
+                request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
+            } catch (Exception e1) {
+                response.sendRedirect("error");
+            }
+        } catch (Exception e){
+            response.sendRedirect("error");
         }
-
-        Item item = new Item(id, title, description, price, amount);
-        AdminService adminService = new AdminServiceImpl();
-        if (item.getId() > 0){
-            adminService.updateItem(item);
-        } else {
-            adminService.createItem(item);
-        }
-        response.sendRedirect("items");
     }
 
     @Override
@@ -47,47 +51,92 @@ public class ItemServlet extends HttpServlet {
         String action = request.getParameter("action");
         PersonService personService = new PersonServiceImpl();
         if (action == null) {
-            request.setAttribute("items", personService.getItems(person));
-            request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
+            try {
+                request.setAttribute("items", personService.getItems(person));
+                request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
+            } catch (DBException e) {
+                response.sendRedirect("/WEB-INF/jsp/error.jsp");
+            }
             return;
         }
 
         String itemIdString = request.getParameter("id");
-        Long itemId = itemIdString == null ? null : Long.parseLong(itemIdString);
 
-        if (action.equalsIgnoreCase("view")){
-            Item item = personService.getItem(itemId);
-            request.setAttribute("item", item);
-            request.getRequestDispatcher("/WEB-INF/jsp/view_item.jsp").forward(request, response);
+        if (action.equalsIgnoreCase("view") && itemIdString != null) {
+            try {
+                Item item = personService.getItem(Long.parseLong(itemIdString));
+                request.setAttribute("item", item);
+                request.getRequestDispatcher("/WEB-INF/jsp/view_item.jsp").forward(request, response);
+            } catch (DBException e) {
+                response.sendRedirect("/WEB-INF/jsp/error.jsp");
+            }
             return;
         }
 
-        if (person.getRole() == Role.admin){
+        if (person.getRole() == Role.admin) {
             AdminService adminService = new AdminServiceImpl();
-            if (action.equalsIgnoreCase("delete")){
-                adminService.deleteItem(itemId);
-                response.sendRedirect("items");
-            } else if (action.equalsIgnoreCase("edit")){
-                Item item = adminService.getItem(itemId);
-                request.setAttribute("item", item);
-                request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("add")){
+            if (action.equalsIgnoreCase("delete") && itemIdString != null) {
+                try {
+                    adminService.deleteItem(Long.parseLong(itemIdString));
+                    response.sendRedirect("items");
+                } catch (DBException e) {
+                    response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                }
+            } else if (action.equalsIgnoreCase("edit") && itemIdString != null) {
+                try {
+                    Item item = adminService.getItem(Long.parseLong(itemIdString));
+                    request.setAttribute("item", item);
+                    request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
+                } catch (DBException e) {
+                    response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                }
+
+            } else if (action.equalsIgnoreCase("add")) {
                 Item item = new Item(-1L, "", "", new BigDecimal(0), 0);
                 request.setAttribute("item", item);
                 request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
             } else {
-                throw new IllegalArgumentException("Action " + action + " is illegal");
+                response.sendRedirect("/WEB-INF/jsp/error.jsp");
             }
-        } else if (person.getRole() == Role.user){
+        } else if (person.getRole() == Role.user) {
             UserService userService = new UserServiceImpl(person);
-            if (action.equalsIgnoreCase("buy")){
-                userService.setPurchase(itemId, 1);
-                response.sendRedirect("items");
+            if (action.equalsIgnoreCase("buy") && itemIdString != null) {
+                try {
+                    userService.setPurchase(Long.parseLong(itemIdString), 1);
+                    response.sendRedirect("items");
+                } catch (DBException | ServiceException e) {
+                    response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                }
+
             } else {
-                throw new IllegalArgumentException("Action " + action + " is illegal");
+                response.sendRedirect("/WEB-INF/jsp/error.jsp");
             }
         } else {
-            throw new ServiceException("Unknown person's role");
+            response.sendRedirect("/WEB-INF/jsp/error.jsp");
+        }
+    }
+
+    private Item getItem(HttpServletRequest request) throws ServiceException {
+        try {
+            String idString = request.getParameter("id");
+            String title = request.getParameter("title");
+            String description = request.getParameter("description");
+            String priceString = request.getParameter("price");
+            String amountString = request.getParameter("amount");
+
+            if (idString == null || idString.isEmpty()
+                    || title == null || title.isEmpty()
+                    || priceString == null || priceString.isEmpty()
+                    || amountString == null || amountString.isEmpty()){
+                throw new ServiceException("A data-entry error");
+            }
+
+            Long id = Long.parseLong(idString);
+            BigDecimal price = BigDecimal.valueOf(Double.parseDouble(priceString));
+            Integer amount = Integer.parseInt(amountString);
+            return new Item(id, title, description, price, amount);
+        } catch (Exception e){
+            throw new ServiceException("Error added items", e);
         }
     }
 }

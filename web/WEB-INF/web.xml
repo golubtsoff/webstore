@@ -5,6 +5,10 @@
          version="3.1">
 
     <filter>
+        <filter-name>ErrorFilter</filter-name>
+        <filter-class>web.filter.ErrorFilter</filter-class>
+    </filter>
+    <filter>
         <filter-name>LogoutFilter</filter-name>
         <filter-class>web.filter.LogoutFilter</filter-class>
     </filter>
@@ -25,6 +29,10 @@
         <filter-class>web.filter.LoggingFilter</filter-class>
     </filter>
 
+    <filter-mapping>
+        <filter-name>ErrorFilter</filter-name>
+        <url-pattern>/error</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>LogoutFilter</filter-name>
         <url-pattern>/logout</url-pattern>

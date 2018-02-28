@@ -45,12 +45,8 @@ public class SignInServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
-        } catch (ServletException | IOException e){
-
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/jsp/signin.jsp").forward(request, response);
     }
 }
 

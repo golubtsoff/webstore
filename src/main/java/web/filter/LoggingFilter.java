@@ -4,6 +4,7 @@ import entity.Item;
 import entity.Person;
 import entity.Role;
 import exception.DBException;
+import exception.ServiceException;
 import service.*;
 
 import javax.servlet.*;
@@ -43,7 +44,7 @@ public class LoggingFilter implements Filter {
             addPersons();
             addItems();
             addPurchases();
-        } catch (DBException e) {
+        } catch (DBException | ServiceException e) {
             e.printStackTrace();
         }
     }
@@ -77,7 +78,7 @@ public class LoggingFilter implements Filter {
 
     }
 
-    private void addPurchases() throws DBException {
+    private void addPurchases() throws DBException, ServiceException {
         PersonService personService = new PersonServiceImpl();
         Person person = personService.signUp("user2", "secret");
         AdminService adminService = new AdminServiceImpl();

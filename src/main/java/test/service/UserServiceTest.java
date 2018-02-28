@@ -3,6 +3,7 @@ package test.service;
 import entity.Item;
 import entity.Person;
 import exception.DBException;
+import exception.ServiceException;
 import service.*;
 
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
  * Created by Evgeniy Golubtsov on 23.02.2018.
  */
 public class UserServiceTest {
-    public static void main(String[] args) throws DBException {
+    public static void main(String[] args) throws DBException, ServiceException {
         PersonService personService = new PersonServiceImpl();
         Person person = personService.signUp("user", "secret");
         AdminService adminService = new AdminServiceImpl();
