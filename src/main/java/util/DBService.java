@@ -26,7 +26,7 @@ public class DBService {
 //    create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
     private static final String hibernate_hbm2ddl_auto = "create";
 
-    private static final String filename = "database.properties";
+    private static final String path = "/database.properties";
 
     private static SessionFactory sessionFactory;
 
@@ -49,9 +49,8 @@ public class DBService {
     private static Configuration getConfiguration() throws ServiceException {
         Configuration configuration = new Configuration();
         addAnnotatedClassToConfiguration(configuration);
-        String path = DBService.class.getClassLoader().getResource(".").getPath() + filename;
 
-        try (InputStream is = new FileInputStream(path)) {
+        try (InputStream is = DBService.class.getResourceAsStream(path)) {
             Properties props = new Properties();
             props.load(is);
 
