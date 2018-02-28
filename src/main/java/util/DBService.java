@@ -12,7 +12,7 @@ import org.hibernate.service.ServiceRegistry;
 
 public class DBService {
     private static final String hibernate_show_sql = "true";
-    //    So the list of possible options are,
+//    So the list of possible options are,
 //
 //    validate: validate the schema, makes no changes to the database.
 //    update: update the schema.
@@ -23,7 +23,8 @@ public class DBService {
     private static final SessionFactory sessionFactory;
 
     static {
-        Configuration configuration = getH2Configuration();
+//        Configuration configuration = getH2Configuration();
+        Configuration configuration = getMySqlConfiguration();
         sessionFactory = createSessionFactory(configuration);
     }
 
@@ -39,11 +40,11 @@ public class DBService {
         Configuration configuration = new Configuration();
         addAnnotatedClassToConfiguration(configuration);
 
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/db_example");
-        configuration.setProperty("hibernate.connection.username", "test");
-        configuration.setProperty("hibernate.connection.password", "test");
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/webstore?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8");
+        configuration.setProperty("hibernate.connection.username", "root");
+        configuration.setProperty("hibernate.connection.password", "");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
         configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
         return configuration;
