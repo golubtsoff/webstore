@@ -34,6 +34,10 @@
                 ${exception}
         </p>
     </c:if>
+    <hr/>
+    <p>
+        <strong>Tip:</strong> &nbsp;Administrator's login: <em>root</em> &nbsp;password: <em>123</em>
+    </p>
 </form>
 </body>
 </html>
