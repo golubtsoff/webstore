@@ -13,6 +13,7 @@ import util.DBService;
 import javax.persistence.NoResultException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -82,9 +83,13 @@ public class PersonServiceImpl implements PersonService {
             ItemDAO dao = new ItemDAOImpl(session);
             List<Item> items = dao.getAll();
             if (person.getRole() == Role.admin){
+                items.sort(Comparator.comparing(Item::getTitle));
                 return items;
             } else {
-                return items.stream().filter((item) -> item.getAmount() > 0).collect(Collectors.toList());
+                return items.stream()
+                        .filter((item) -> item.getAmount() > 0)
+                        .sorted(Comparator.comparing(Item::getTitle))
+                        .collect(Collectors.toList());
             }
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);

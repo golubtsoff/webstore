@@ -12,8 +12,10 @@ import util.DBService;
 import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Evgeniy Golubtsov on 12.02.2018.
@@ -80,7 +82,9 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public List<Purchase> getPurchases() throws DBException {
         try (Session session = DBService.getSession()){
             PurchaseDAO dao = new PurchaseDAOImpl(session);
-            return dao.getAll();
+            return dao.getAll().stream()
+                    .sorted(Comparator.comparing(Purchase::getDateTime))
+                    .collect(Collectors.toList());
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
         }
