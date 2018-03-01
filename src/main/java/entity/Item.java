@@ -96,6 +96,7 @@ public class Item {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,7 +104,6 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (getAmount() != item.getAmount()) return false;
         if (!getTitle().equals(item.getTitle())) return false;
         if (getDescription() != null ? !getDescription().equals(item.getDescription()) : item.getDescription() != null)
             return false;
@@ -115,7 +115,6 @@ public class Item {
         int result = getTitle().hashCode();
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + getPrice().hashCode();
-        result = 31 * result + getAmount();
         return result;
     }
 }

@@ -25,18 +25,22 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
 
     private Person person;
 
-    public UserServiceImpl(Person person){
+    public UserServiceImpl(Person person) {
         this.person = person;
     }
 
     @Override
     public long setPurchase(long itemId, int amount) throws DBException, ServiceException {
-        try (Session session = DBService.getSession()){
+        try (Session session = DBService.getSession()) {
             Transaction transaction = session.beginTransaction();
 
             ItemDAO itemDAO = new ItemDAOImpl(session);
             Item item = itemDAO.get(itemId);
-            checkConditionPurchase(item, amount);
+            try {
+                checkConditionPurchase(item, amount);
+            } catch (ServiceException e){
+                throw e;
+            }
             Purchase purchase = new Purchase(person, item, LocalDateTime.now(), amount);
             PurchaseDAO purchaseDAO = new PurchaseDAOImpl(session);
             Long purchaseId = purchaseDAO.create(purchase);
@@ -51,15 +55,15 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             return purchaseId;
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
-        } catch (ServiceException el){
-            throw el;
+        } catch (NullPointerException el) {
+            throw new ServiceException(el);
         }
     }
 
-    private void checkConditionPurchase(Item item, int amount) throws ServiceException{
-        if (item == null){
+    private void checkConditionPurchase(Item item, int amount) throws ServiceException {
+        if (item == null) {
             throw new ServiceException("There is no item");
-        } else if (amount > item.getAmount()){
+        } else if (amount > item.getAmount()) {
             throw new ServiceException("Not enough amount of items");
         }
     }

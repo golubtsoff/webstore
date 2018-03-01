@@ -71,7 +71,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
             transaction.commit();
 
             logger.fine("Delete item " + item);
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | IllegalArgumentException e) {
             throw new DBException(e);
         }
     }
