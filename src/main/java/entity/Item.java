@@ -1,7 +1,6 @@
 package entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -21,10 +20,12 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", unique = true)
+    @Type(type = "text")
     private String title;
 
     @Column(name = "DESCRIPTION")
+    @Type(type = "text")
     private String description;
 
     @Column(name = "PRICE")
@@ -93,5 +94,28 @@ public class Item {
                 ", price=" + price +
                 ", amount=" + amount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+
+        Item item = (Item) o;
+
+        if (getAmount() != item.getAmount()) return false;
+        if (!getTitle().equals(item.getTitle())) return false;
+        if (getDescription() != null ? !getDescription().equals(item.getDescription()) : item.getDescription() != null)
+            return false;
+        return getPrice().equals(item.getPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTitle().hashCode();
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + getPrice().hashCode();
+        result = 31 * result + getAmount();
+        return result;
     }
 }

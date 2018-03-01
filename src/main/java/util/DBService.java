@@ -17,14 +17,11 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class DBService {
-    private static final String hibernate_show_sql = "true";
-//    So the list of possible options are,
-//
 //    validate: validate the schema, makes no changes to the database.
 //    update: update the schema.
 //    create: creates the schema, destroying previous data.
 //    create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
-    private static final String hibernate_hbm2ddl_auto = "create";
+    private static String hibernate_hbm2ddl_auto = null;
 
     private static final String path = "/database.properties";
 
@@ -62,6 +59,8 @@ public class DBService {
             configuration.setProperty("hibernate.show_sql", props.getProperty("hibernate.show_sql"));
             configuration.setProperty("hibernate.hbm2ddl.auto", props.getProperty("hibernate.hbm2ddl.auto"));
 
+            hibernate_hbm2ddl_auto = configuration.getProperty("hibernate.hbm2ddl.auto");
+
         } catch (IOException e) {
             throw new ServiceException("Invalid config file " + path);
         }
@@ -84,5 +83,10 @@ public class DBService {
 
     public static void close(){
         sessionFactory.close();
+    }
+
+    public static boolean isTesting(){
+        return hibernate_hbm2ddl_auto.equalsIgnoreCase("create")
+                || hibernate_hbm2ddl_auto.equalsIgnoreCase("create-drop");
     }
 }

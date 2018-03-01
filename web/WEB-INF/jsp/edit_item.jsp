@@ -35,12 +35,12 @@
             <input type="hidden" name="id" value="${item.id}">
             <table cellpadding="2">
                 <tr>
-                    <td><strong>Title</strong></td>
-                    <td><input required type="text" name="title" size=30 value="${item.title}"></td>
+                    <td><strong>Title</strong><br/> (max 150 symbols)</td>
+                    <td><input required type="text" name="title" size=30 maxlength="150" value="${item.title}"></td>
                 </tr>
                 <tr>
-                    <td><strong>Description</strong></td>
-                    <td><textarea name="description" cols="30" rows="10">${item.description}</textarea>
+                    <td><strong>Description</strong><br/> (max 1000 symbols)</td>
+                    <td><textarea name="description" cols="30" rows="10" maxlength="1000">${item.description}</textarea>
                     </td>
                 </tr>
                 <tr>
