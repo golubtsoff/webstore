@@ -1,9 +1,11 @@
 package dao;
 
 import entity.Item;
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.LockModeType;
 import java.util.List;
 
 /**
@@ -19,7 +21,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Item get(long id) {
-        return session.get(Item.class, id);
+        return session.get(Item.class, id, LockMode.PESSIMISTIC_READ);
     }
 
     @Override

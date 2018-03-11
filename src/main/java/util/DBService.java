@@ -24,7 +24,6 @@ public class DBService {
     private static String hibernate_hbm2ddl_auto = null;
 
     private static final String path = "/database.properties";
-
     private static SessionFactory sessionFactory;
 
     static {
@@ -58,6 +57,7 @@ public class DBService {
             configuration.setProperty("hibernate.connection.password", props.getProperty("hibernate.connection.password"));
             configuration.setProperty("hibernate.show_sql", props.getProperty("hibernate.show_sql"));
             configuration.setProperty("hibernate.hbm2ddl.auto", props.getProperty("hibernate.hbm2ddl.auto"));
+            configuration.setProperty("hibernate.connection.pool_size", props.getProperty("hibernate.connection.pool_size"));
 
             hibernate_hbm2ddl_auto = configuration.getProperty("hibernate.hbm2ddl.auto");
 

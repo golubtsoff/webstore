@@ -7,10 +7,15 @@ import exception.ServiceException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import util.DBService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class UserServiceTest {
 
@@ -25,15 +30,15 @@ public class UserServiceTest {
     public void tearDown() throws Exception {
     }
 
-    @Test (expected = DBException.class)
-    public void setPurchaseDBException() throws Exception {
+    @Test (expected = ServiceException.class)
+    public void testSetPurchaseDBException() throws Exception {
         Person person = personService.signUp("Bob", "pass345");
         UserService userService = new UserServiceImpl(person);
         userService.setPurchase(-1, -1);
     }
 
-    @Test (expected = ServiceException.class)
-    public void setPurchaseServiceException() throws Exception {
+    @Test (expected = DBException.class)
+    public void testSetPurchaseServiceException() throws Exception {
         Person person = personService.signUp("Bob", "pass345");
         UserService userService = new UserServiceImpl(person);
         Item item = new Item("Гравитационный 3D лабиринт",
@@ -45,6 +50,52 @@ public class UserServiceTest {
 
         Long itemId = adminService.createItem(item);
         userService.setPurchase(itemId, 1);
+    }
+
+    @Test
+    public void testSetPurchase() throws InterruptedException, DBException {
+        final int COUNT_USER = 10;
+        final int AMOUNT_ITEM = 5;
+        AtomicInteger countPurchase = new AtomicInteger(0);
+
+        PersonService personService = new PersonServiceImpl();
+        List<Person> persons = new ArrayList<>();
+        for (int i = 0; i < COUNT_USER; i++) {
+            persons.add(personService.signUp("user100" + i, "user100" + i));
+        }
+        Item item = new Item("Головоломка Кубик Рубика 4*4 New",
+                "Головоломка \"Кубик Рубика 4*4 New\"- усложненный вариант классической головоломки, покорившей весь мир. У него уже по 16 клеток на каждой грани и к тому же совершенно иные алгоритмы сборки. Кстати, в оригинале этот кубик называется Rubik’s Revenge, или Месть Рубика.",
+                new BigDecimal(10),
+                AMOUNT_ITEM);
+        AdminService adminService = new AdminServiceImpl();
+        Long itemId = adminService.createItem(item);
+
+        List<Thread> threads = new ArrayList<Thread>();
+        for (Person person : persons){
+            threads.add(new Thread(() -> {
+                UserService userService = new UserServiceImpl(person);
+                try {
+                    userService.setPurchase(itemId, 1);
+                    countPurchase.incrementAndGet();
+                } catch (DBException e) {
+                    e.printStackTrace();
+                } catch (ServiceException e) {
+                    e.printStackTrace();
+                }
+            }));
+        }
+
+        for (Thread thread : threads){
+            thread.start();
+        }
+
+        for (Thread thread : threads){
+            thread.join();
+        }
+
+        assertEquals("Count of purchases and count of item not equals",
+                AMOUNT_ITEM,
+                adminService.getPurchases().size());
     }
 
 }
