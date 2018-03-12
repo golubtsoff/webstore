@@ -5,12 +5,14 @@ import entity.Item;
 import entity.Person;
 import entity.Role;
 import exception.DBException;
+import exception.ServiceException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.DBService;
 
 import javax.persistence.NoResultException;
+import javax.sql.rowset.serial.SerialException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
@@ -34,6 +36,9 @@ public class PersonServiceImpl implements PersonService {
         try (Session session = DBService.getSession()){
             PersonDAO dao = new PersonDAOImpl(session);
             Person person = dao.getByName(name);
+            if (person == null || !person.getPassword().equals(password)){
+                return null;
+            }
             logger.fine("Person signed: " + person);
             return dao.getByName(name);
         } catch (HibernateException | NoResultException e) {
