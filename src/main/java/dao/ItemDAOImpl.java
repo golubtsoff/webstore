@@ -26,7 +26,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public List<Item> getAll() {
-        return session.createQuery("from Item").list();
+        return session.createQuery("from Item", Item.class).list();
     }
 
     @Override

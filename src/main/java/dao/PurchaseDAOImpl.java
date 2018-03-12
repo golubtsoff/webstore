@@ -23,7 +23,7 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 
     @Override
     public List<Purchase> getAll() {
-        return session.createQuery("from Purchase").list();
+        return session.createQuery("from Purchase", Purchase.class).list();
     }
 
     @Override
