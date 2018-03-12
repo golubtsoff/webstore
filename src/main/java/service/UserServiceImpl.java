@@ -73,9 +73,6 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
     }
 
     private boolean checkConditionPurchase(Item item, int amount) {
-        if (item == null || amount > item.getAmount()) {
-            return false;
-        }
-        return true;
+        return item != null && amount <= item.getAmount();
     }
 }

@@ -34,7 +34,8 @@ public class Item {
     @Column(name = "AMOUNT")
     private int amount;
 
-    public Item(){}
+    public Item() {
+    }
 
     public Item(String title, String description, BigDecimal price, int amount) {
         this(null, title, description, price, amount);
@@ -104,10 +105,9 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (!getTitle().equals(item.getTitle())) return false;
-        if (getDescription() != null ? !getDescription().equals(item.getDescription()) : item.getDescription() != null)
-            return false;
-        return getPrice().equals(item.getPrice());
+        return getTitle().equals(item.getTitle())
+                && (getDescription() != null ? getDescription().equals(item.getDescription()) : item.getDescription() == null)
+                && getPrice().equals(item.getPrice());
     }
 
     @Override

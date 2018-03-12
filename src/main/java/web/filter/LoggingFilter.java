@@ -1,11 +1,5 @@
 package web.filter;
 
-import entity.Item;
-import entity.Person;
-import entity.Role;
-import exception.DBException;
-import exception.ServiceException;
-import service.*;
 import util.DBService;
 import util.DataUtil;
 
@@ -14,9 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Evgeniy Golubtsov on 17.02.2018.

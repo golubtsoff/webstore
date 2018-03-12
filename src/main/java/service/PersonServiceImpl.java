@@ -5,21 +5,14 @@ import entity.Item;
 import entity.Person;
 import entity.Role;
 import exception.DBException;
-import exception.ServiceException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.DBService;
 
 import javax.persistence.NoResultException;
-import javax.sql.rowset.serial.SerialException;
-import java.io.File;
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 

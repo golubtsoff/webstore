@@ -7,14 +7,12 @@ import exception.ServiceException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import util.DBService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class UserServiceTest {
@@ -70,16 +68,14 @@ public class UserServiceTest {
         AdminService adminService = new AdminServiceImpl();
         Long itemId = adminService.createItem(item);
 
-        List<Thread> threads = new ArrayList<Thread>();
+        List<Thread> threads = new ArrayList<>();
         for (Person person : persons){
             threads.add(new Thread(() -> {
                 UserService userService = new UserServiceImpl(person);
                 try {
                     userService.setPurchase(itemId, 1);
                     countPurchase.incrementAndGet();
-                } catch (DBException e) {
-                    e.printStackTrace();
-                } catch (ServiceException e) {
+                } catch (DBException | ServiceException e) {
                     e.printStackTrace();
                 }
             }));

@@ -3,15 +3,12 @@ package service;
 import entity.Item;
 import entity.Person;
 import entity.Purchase;
-import entity.Role;
 import exception.DBException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;

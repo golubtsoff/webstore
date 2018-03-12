@@ -3,9 +3,7 @@ package dao;
 import entity.Item;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import javax.persistence.LockModeType;
 import java.util.List;
 
 /**

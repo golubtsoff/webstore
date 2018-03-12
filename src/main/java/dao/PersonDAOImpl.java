@@ -1,14 +1,10 @@
 package dao;
 
 import entity.Person;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by Evgeniy Golubtsov on 11.02.2018.

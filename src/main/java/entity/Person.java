@@ -1,7 +1,5 @@
 package entity;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 
 /**
@@ -89,9 +87,7 @@ public class Person {
 
         Person person = (Person) o;
 
-        if (!getLogin().equals(person.getLogin())) return false;
-        if (!getPassword().equals(person.getPassword())) return false;
-        return getRole() == person.getRole();
+        return getLogin().equals(person.getLogin()) && getPassword().equals(person.getPassword()) && getRole() == person.getRole();
     }
 
     @Override
