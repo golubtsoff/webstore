@@ -55,7 +55,7 @@ public class ItemServlet extends HttpServlet {
                 request.setAttribute("items", personService.getItems(person));
                 request.getRequestDispatcher("/WEB-INF/jsp/view_items.jsp").forward(request, response);
             } catch (DBException e) {
-                response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                response.sendRedirect("error");
             }
             return;
         }
@@ -68,7 +68,7 @@ public class ItemServlet extends HttpServlet {
                 request.setAttribute("item", item);
                 request.getRequestDispatcher("/WEB-INF/jsp/view_item.jsp").forward(request, response);
             } catch (DBException e) {
-                response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                response.sendRedirect("error");
             }
             return;
         }
@@ -80,7 +80,7 @@ public class ItemServlet extends HttpServlet {
                     adminService.deleteItem(Long.parseLong(itemIdString));
                     response.sendRedirect("items");
                 } catch (DBException e) {
-                    response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                    response.sendRedirect("error");
                 }
             } else if (action.equalsIgnoreCase("edit") && itemIdString != null) {
                 try {
@@ -88,7 +88,7 @@ public class ItemServlet extends HttpServlet {
                     request.setAttribute("item", item);
                     request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
                 } catch (DBException e) {
-                    response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                    response.sendRedirect("error");
                 }
 
             } else if (action.equalsIgnoreCase("add")) {
@@ -96,7 +96,7 @@ public class ItemServlet extends HttpServlet {
                 request.setAttribute("item", item);
                 request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
             } else {
-                response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                response.sendRedirect("error");
             }
         } else if (person.getRole() == Role.user) {
             UserService userService = new UserServiceImpl(person);
@@ -105,14 +105,14 @@ public class ItemServlet extends HttpServlet {
                     userService.setPurchase(Long.parseLong(itemIdString), 1);
                     response.sendRedirect("items");
                 } catch (DBException | ServiceException e) {
-                    response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                    response.sendRedirect("error");
                 }
 
             } else {
-                response.sendRedirect("/WEB-INF/jsp/error.jsp");
+                response.sendRedirect("error");
             }
         } else {
-            response.sendRedirect("/WEB-INF/jsp/error.jsp");
+            response.sendRedirect("error");
         }
     }
 
