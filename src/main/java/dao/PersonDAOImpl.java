@@ -2,6 +2,7 @@ package dao;
 
 import entity.Person;
 import org.hibernate.Session;
+import util.DBService;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
@@ -11,19 +12,15 @@ import javax.persistence.criteria.*;
  */
 public class PersonDAOImpl implements PersonDAO {
 
-    private Session session;
-
-    public PersonDAOImpl(Session session) {
-        this.session = session;
-    }
-
     @Override
     public Person get(long id) {
+        Session session = DBService.getSessionFactory().getCurrentSession();
         return session.get(Person.class, id);
     }
 
     @Override
     public Person getByName(String login) {
+        Session session = DBService.getSessionFactory().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
         Query query = session.createQuery("from Person where login = :paramLogin");
@@ -33,6 +30,7 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public long create(Person person) {
+        Session session = DBService.getSessionFactory().getCurrentSession();
         return (Long) session.save(person);
     }
 

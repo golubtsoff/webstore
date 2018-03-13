@@ -26,14 +26,19 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person signIn(String name, String password) throws DBException {
-        try (Session session = DBService.getSession()){
-            PersonDAO dao = new PersonDAOImpl(session);
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+
+            PersonDAO dao = new PersonDAOImpl();
             Person person = dao.getByName(name);
             if (person == null || !person.getPassword().equals(password)){
                 return null;
             }
+
+            transaction.commit();
             logger.fine("Person signed: " + person);
-            return dao.getByName(name);
+            return person;
         } catch (HibernateException | NoResultException e) {
             throw new DBException(e);
         }
@@ -46,10 +51,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person signUp(String name, String password, Role role) throws DBException {
-        try (Session session = DBService.getSession()){
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
 
-            PersonDAO dao = new PersonDAOImpl(session);
+            PersonDAO dao = new PersonDAOImpl();
             Long id = dao.create(new Person(name, password, role));
             Person person = dao.get(id);
 
@@ -65,9 +71,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Item getItem(long id) throws DBException {
-        try (Session session = DBService.getSession()){
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
 
-            ItemDAO dao = new ItemDAOImpl(session);
+            ItemDAO dao = new ItemDAOImpl();
             return dao.get(id);
 
         } catch (HibernateException | NoResultException e) {
@@ -77,8 +84,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Item> getItems(Person person) throws DBException {
-        try (Session session = DBService.getSession()){
-            ItemDAO dao = new ItemDAOImpl(session);
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
+            ItemDAO dao = new ItemDAOImpl();
             List<Item> items = dao.getAll();
             if (person.getRole() == Role.admin){
                 items.sort(Comparator.comparing(Item::getTitle));

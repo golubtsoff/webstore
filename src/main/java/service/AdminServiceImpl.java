@@ -28,10 +28,11 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     @Override
     public long createItem(Item item) throws DBException {
-        try (Session session = DBService.getSession()){
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
 
-            ItemDAO dao = new ItemDAOImpl(session);
+            ItemDAO dao = new ItemDAOImpl();
             long id = dao.create(item);
 
             transaction.commit();
@@ -46,10 +47,11 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     @Override
     public void updateItem(Item item) throws DBException {
-        try (Session session = DBService.getSession()){
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
 
-            ItemDAO dao = new ItemDAOImpl(session);
+            ItemDAO dao = new ItemDAOImpl();
             dao.update(item);
 
             transaction.commit();
@@ -62,10 +64,11 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     @Override
     public void deleteItem(long id) throws DBException {
-        try (Session session = DBService.getSession()){
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
 
-            ItemDAO dao = new ItemDAOImpl(session);
+            ItemDAO dao = new ItemDAOImpl();
             Item item = dao.delete(id);
 
             transaction.commit();
@@ -78,8 +81,9 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     @Override
     public List<Purchase> getPurchases() throws DBException {
-        try (Session session = DBService.getSession()){
-            PurchaseDAO dao = new PurchaseDAOImpl(session);
+        try {
+            Session session = DBService.getSessionFactory().getCurrentSession();
+            PurchaseDAO dao = new PurchaseDAOImpl();
             return dao.getAll().stream()
                     .sorted(Comparator.comparing(Purchase::getDateTime))
                     .collect(Collectors.toList());

@@ -41,6 +41,10 @@ public class DBService {
         return sessionFactory.openSession();
     }
 
+    public static SessionFactory getSessionFactory(){
+        return sessionFactory;
+    }
+
     private static Configuration getConfiguration() throws ServiceException {
         Configuration configuration = new Configuration();
         addAnnotatedClassToConfiguration(configuration);
@@ -57,6 +61,8 @@ public class DBService {
             configuration.setProperty("hibernate.show_sql", props.getProperty("hibernate.show_sql"));
             configuration.setProperty("hibernate.hbm2ddl.auto", props.getProperty("hibernate.hbm2ddl.auto"));
             configuration.setProperty("hibernate.connection.pool_size", props.getProperty("hibernate.connection.pool_size"));
+            configuration.setProperty("hibernate.current_session_context_class", "thread");
+
 
             hibernate_hbm2ddl_auto = configuration.getProperty("hibernate.hbm2ddl.auto");
 
