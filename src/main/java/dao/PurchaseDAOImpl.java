@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Purchase;
-import org.hibernate.Session;
 import util.DBService;
 
 import java.util.List;

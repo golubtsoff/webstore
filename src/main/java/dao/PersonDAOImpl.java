@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import util.DBService;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.*;
 
 /**
  * Created by Evgeniy Golubtsov on 11.02.2018.
