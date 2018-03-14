@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class DBService {
+public abstract class DBService {
 //    validate: validate the schema, makes no changes to the database.
 //    update: update the schema.
 //    create: creates the schema, destroying previous data.

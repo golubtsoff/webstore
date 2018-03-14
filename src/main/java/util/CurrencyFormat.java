@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Created by Evgeniy Golubtsov on 25.02.2018.
  */
-public class CurrencyFormat {
+public abstract class CurrencyFormat {
     private static Locale locale = Locale.US;
     private static NumberFormat numberFormatter = NumberFormat.getCurrencyInstance(locale);
 
