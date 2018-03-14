@@ -7,7 +7,6 @@ import entity.Purchase;
 import exception.DBException;
 import exception.ServiceException;
 import org.hibernate.*;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import util.DBService;
 
 import javax.persistence.NoResultException;
@@ -30,21 +29,13 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
 
     @Override
     public long setPurchase(long itemId, int amount) throws DBException, ServiceException {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = DBService.getTransaction();
         try {
-            if (!transaction.isActive()) {
-                transaction = session.beginTransaction();
-            }
-
             ItemDAO itemDAO = DaoFactory.getItemDAO();
             Item item = itemDAO.get(itemId);
 
             if (!checkConditionPurchase(item, amount)) {
-                if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                        || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                    session.getTransaction().rollback();
-                }
+                DBService.transactionRollback(transaction);
                 throw new ServiceException("No item for purchase");
             }
 
@@ -59,16 +50,10 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             logger.fine("Item purchased: " + purchase);
             return purchaseId;
         } catch (HibernateException | NoResultException e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
+            DBService.transactionRollback(transaction);
             throw new DBException(e);
         } catch (NullPointerException | IllegalStateException el) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
+            DBService.transactionRollback(transaction);
             throw new ServiceException(el);
         }
     }

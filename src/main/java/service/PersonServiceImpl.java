@@ -6,9 +6,7 @@ import entity.Person;
 import entity.Role;
 import exception.DBException;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import util.DBService;
 
 import javax.persistence.NoResultException;
@@ -27,12 +25,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person signIn(String name, String password) throws DBException {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        Transaction transaction = null;
-
+        Transaction transaction = DBService.getTransaction();
         try {
-            transaction = session.beginTransaction();
-
             PersonDAO dao = DaoFactory.getPersonDAO();
             Person person = dao.getByName(name);
             if (person == null || !person.getPassword().equals(password)){
@@ -43,10 +37,7 @@ public class PersonServiceImpl implements PersonService {
             logger.fine("Person signed: " + person);
             return person;
         } catch (HibernateException | NoResultException e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
+            DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
     }
@@ -58,13 +49,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person signUp(String name, String password, Role role) throws DBException {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = DBService.getTransaction();
         try {
-            if (!transaction.isActive()) {
-                transaction = session.beginTransaction();
-            }
-
             PersonDAO dao = DaoFactory.getPersonDAO();
             Long id = dao.create(new Person(name, password, role));
             Person person = dao.get(id);
@@ -75,23 +61,15 @@ public class PersonServiceImpl implements PersonService {
 
             return person;
         } catch (HibernateException | NoResultException e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
+            DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
     }
 
     @Override
     public Item getItem(long id) throws DBException {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = DBService.getTransaction();
         try {
-            if (!transaction.isActive()) {
-                transaction = session.beginTransaction();
-            }
-
             ItemDAO dao = DaoFactory.getItemDAO();
             Item item = dao.get(id);
 
@@ -99,22 +77,15 @@ public class PersonServiceImpl implements PersonService {
             return item;
 
         } catch (HibernateException | NoResultException e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
+            DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
     }
 
     @Override
     public List<Item> getItems(Person person) throws DBException {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = DBService.getTransaction();
         try {
-            if (!transaction.isActive()) {
-                transaction = session.beginTransaction();
-            }
             ItemDAO dao = DaoFactory.getItemDAO();
             List<Item> items = dao.getAll();
             if (person.getRole() == Role.admin){
@@ -128,10 +99,7 @@ public class PersonServiceImpl implements PersonService {
             transaction.commit();
             return items;
         } catch (HibernateException | NoResultException e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
+            DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
     }

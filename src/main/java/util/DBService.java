@@ -7,10 +7,13 @@ import entity.Role;
 import exception.ServiceException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -37,8 +40,20 @@ public class DBService {
     private DBService() {
     }
 
-    public static Session getSession(){
-        return sessionFactory.openSession();
+    public static Transaction getTransaction(){
+        Session session = DBService.getSessionFactory().getCurrentSession();
+        Transaction transaction = DBService.getSessionFactory().getCurrentSession().getTransaction();
+        if (!transaction.isActive()) {
+            transaction = session.beginTransaction();
+        }
+        return transaction;
+    }
+
+    public static void transactionRollback(Transaction transaction){
+        if (transaction.getStatus() == TransactionStatus.ACTIVE
+                || transaction.getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+            transaction.rollback();
+        }
     }
 
     public static SessionFactory getSessionFactory(){
