@@ -1,6 +1,6 @@
 package dao;
 
-public class DaoFactory {
+public abstract class DaoFactory {
     private static volatile ItemDAO itemDAO;
     private static volatile PersonDAO personDAO;
     private static volatile PurchaseDAO purchaseDAO;
