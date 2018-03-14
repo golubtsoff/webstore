@@ -91,7 +91,7 @@ public class AdminServiceTest {
     public void testGetPurchases() throws Exception {
         Person person = personService.signUp("Bob", "pass345");
 
-        UserService userService = new UserServiceImpl(person);
+        UserService userService = ServiceFactory.getUserService();
         Item item = new Item("Гравитационный 3D лабиринт",
                 "\"Гравитационный 3D-лабиринт\" - объемная головоломка от компании ThinkFun, увидевшая свет в 2017 году. Решая ее задания, игроку предстоит проложить маршрут для металлического шарика, который скатывается под собственным весом по выстраиваемому лабиринту.\n" +
                         "\n" +
@@ -100,9 +100,9 @@ public class AdminServiceTest {
                 3);
 
         Long itemId = adminService.createItem(item);
-        userService.setPurchase(itemId, 1);
-        userService.setPurchase(itemId, 1);
-        userService.setPurchase(itemId, 1);
+        userService.setPurchase(itemId, 1, person);
+        userService.setPurchase(itemId, 1, person);
+        userService.setPurchase(itemId, 1, person);
 
         List<Purchase> testPurchases = adminService.getPurchases();
         for (Purchase purchase : testPurchases){

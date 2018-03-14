@@ -21,14 +21,11 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
 
     private static Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
-    private Person person;
-
-    public UserServiceImpl(Person person) {
-        this.person = person;
+    UserServiceImpl() {
     }
 
     @Override
-    public long setPurchase(long itemId, int amount) throws DBException, ServiceException {
+    public long setPurchase(long itemId, int amount, Person person) throws DBException, ServiceException {
         Transaction transaction = DBService.getTransaction();
         try {
             ItemDAO itemDAO = DaoFactory.getItemDAO();

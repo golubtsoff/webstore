@@ -22,7 +22,7 @@ public class ItemServlet extends HttpServlet {
         try {
             request.setCharacterEncoding("UTF-8");
             Item item = getItem(request);
-            AdminService adminService = new AdminServiceImpl();
+            AdminService adminService = ServiceFactory.getAdminService();
             if (item.getId() > 0) {
                 adminService.updateItem(item);
             } else {
@@ -49,7 +49,7 @@ public class ItemServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         Person person = (Person) session.getAttribute("person");
         String action = request.getParameter("action");
-        PersonService personService = new PersonServiceImpl();
+        PersonService personService = ServiceFactory.getPersonService();
         if (action == null) {
             try {
                 request.setAttribute("items", personService.getItems(person));
@@ -74,7 +74,7 @@ public class ItemServlet extends HttpServlet {
         }
 
         if (person.getRole() == Role.admin) {
-            AdminService adminService = new AdminServiceImpl();
+            AdminService adminService = ServiceFactory.getAdminService();
             if (action.equalsIgnoreCase("delete") && itemIdString != null) {
                 try {
                     adminService.deleteItem(Long.parseLong(itemIdString));
@@ -99,10 +99,10 @@ public class ItemServlet extends HttpServlet {
                 response.sendRedirect("error");
             }
         } else if (person.getRole() == Role.user) {
-            UserService userService = new UserServiceImpl(person);
+            UserService userService = ServiceFactory.getUserService();
             if (action.equalsIgnoreCase("buy") && itemIdString != null) {
                 try {
-                    userService.setPurchase(Long.parseLong(itemIdString), 1);
+                    userService.setPurchase(Long.parseLong(itemIdString), 1, person);
                     response.sendRedirect("items");
                 } catch (DBException | ServiceException e) {
                     response.sendRedirect("error");

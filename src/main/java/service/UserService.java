@@ -1,5 +1,6 @@
 package service;
 
+import entity.Person;
 import exception.DBException;
 import exception.ServiceException;
 
@@ -8,5 +9,5 @@ import exception.ServiceException;
  */
 public interface UserService extends PersonService {
 
-    long setPurchase(long itemId, int amount) throws DBException, ServiceException;
+    long setPurchase(long itemId, int amount, Person person) throws DBException, ServiceException;
 }

@@ -25,15 +25,15 @@ public class DataUtil {
 
     private void addPersons() throws DBException {
         // sign up person
-        PersonService personService = new PersonServiceImpl();
+        PersonService personService = ServiceFactory.getPersonService();
         personService.signUp("root", "123", Role.admin);
         personService.signUp("user", "345");
     }
 
     private void addItems() throws DBException {
-        PersonService personService = new PersonServiceImpl();
+        PersonService personService = ServiceFactory.getPersonService();
         personService.signUp("alice", "111");
-        AdminService adminService = new AdminServiceImpl();
+        AdminService adminService = ServiceFactory.getAdminService();
         List<Item> items = new ArrayList<>();
         items.add(new Item("Конструктор Самоделкин цветной 80 моделей",
                 "Конструктор \"Самоделкин цветной 80 моделей\"- настоящая классика среди игрушек подобного рода. Такие же конструкторы были популярны в советское время и использовались на уроках труда в младших классах. А у сегодняшних родителей есть шанс подарить ребенку игрушку из своего детства. В состав набора входит 307 деталей. Большинство основных деталей окрашено, что делает готовые модели более яркими.",
@@ -54,9 +54,9 @@ public class DataUtil {
     }
 
     private void addPurchases() throws DBException, ServiceException {
-        PersonService personService = new PersonServiceImpl();
+        PersonService personService = ServiceFactory.getPersonService();
         Person person = personService.signUp("user2", "secret");
-        AdminService adminService = new AdminServiceImpl();
+        AdminService adminService = ServiceFactory.getAdminService();
         Item item = new Item(
                 "Настольная игра Имаджинариум Юбилейное издание ",
                 "«Имаджинариум. 5 лет» — настольная игра, в которой вам предстоит придумывать ассоциации к интереснейшим картинкам, выпущенная к юбилею популярной серии. Издание с новыми волшебными иллюстрациями, яркими стеклянными фигурками игрока (индивидуальные, неповторяющиеся) и удобнейшим органайзером для хранения элементов и дополнений!",
@@ -64,7 +64,7 @@ public class DataUtil {
                 2);
         Long itemId = adminService.createItem(item);
 
-        UserService userService = new UserServiceImpl(person);
-        userService.setPurchase(itemId, 1);
+        UserService userService = ServiceFactory.getUserService();
+        userService.setPurchase(itemId, 1, person);
     }
 }

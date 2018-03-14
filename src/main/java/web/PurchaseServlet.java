@@ -3,6 +3,7 @@ package web;
 import exception.DBException;
 import service.AdminService;
 import service.AdminServiceImpl;
+import service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ public class PurchaseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
-            AdminService adminService = new AdminServiceImpl();
+            AdminService adminService = ServiceFactory.getAdminService();
             try {
                 request.setAttribute("purchases", adminService.getPurchases());
                 request.getRequestDispatcher("/WEB-INF/jsp/view_purchases.jsp").forward(request, response);

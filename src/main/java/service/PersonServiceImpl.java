@@ -23,6 +23,8 @@ public class PersonServiceImpl implements PersonService {
 
     private static Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
 
+    PersonServiceImpl(){}
+
     @Override
     public Person signIn(String name, String password) throws DBException {
         Transaction transaction = DBService.getTransaction();

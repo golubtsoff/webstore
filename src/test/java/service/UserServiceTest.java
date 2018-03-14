@@ -31,14 +31,14 @@ public class UserServiceTest {
     @Test (expected = ServiceException.class)
     public void testSetPurchaseDBException() throws Exception {
         Person person = personService.signUp("Bob", "pass345");
-        UserService userService = new UserServiceImpl(person);
-        userService.setPurchase(-1, -1);
+        UserService userService = ServiceFactory.getUserService();
+        userService.setPurchase(-1, -1, person);
     }
 
     @Test (expected = DBException.class)
     public void testSetPurchaseServiceException() throws Exception {
         Person person = personService.signUp("Bob", "pass345");
-        UserService userService = new UserServiceImpl(person);
+        UserService userService = ServiceFactory.getUserService();
         Item item = new Item("Гравитационный 3D лабиринт",
                 "\"Гравитационный 3D-лабиринт\" - объемная головоломка от компании ThinkFun, увидевшая свет в 2017 году. Решая ее задания, игроку предстоит проложить маршрут для металлического шарика, который скатывается под собственным весом по выстраиваемому лабиринту.\n" +
                         "\n" +
@@ -47,7 +47,7 @@ public class UserServiceTest {
                 0);
 
         Long itemId = adminService.createItem(item);
-        userService.setPurchase(itemId, 1);
+        userService.setPurchase(itemId, 1, person);
     }
 
     @Test
@@ -71,9 +71,9 @@ public class UserServiceTest {
         List<Thread> threads = new ArrayList<>();
         for (Person person : persons){
             threads.add(new Thread(() -> {
-                UserService userService = new UserServiceImpl(person);
+                UserService userService = ServiceFactory.getUserService();
                 try {
-                    userService.setPurchase(itemId, 1);
+                    userService.setPurchase(itemId, 1, person);
                     countPurchase.incrementAndGet();
                 } catch (DBException | ServiceException e) {
                     e.printStackTrace();

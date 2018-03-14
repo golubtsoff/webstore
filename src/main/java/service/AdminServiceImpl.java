@@ -22,7 +22,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     private static Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
 
-    public AdminServiceImpl() {
+    AdminServiceImpl() {
     }
 
     @Override

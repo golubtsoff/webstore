@@ -4,6 +4,7 @@ import entity.Person;
 import exception.DBException;
 import service.PersonService;
 import service.PersonServiceImpl;
+import service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +31,7 @@ public class SignUpServlet extends HttpServlet {
             return;
         }
 
-        PersonService personService = new PersonServiceImpl();
+        PersonService personService = ServiceFactory.getPersonService();
         Person person;
         try{
             person = personService.signUp(login, password);
