@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  */
 public class DBException extends Exception {
 
-    private static Logger logger = Logger.getLogger(DBException.class.getName());
+    private static final Logger logger = Logger.getLogger(DBException.class.getName());
 
     public DBException(String message, Exception e) {
         super(message, e);

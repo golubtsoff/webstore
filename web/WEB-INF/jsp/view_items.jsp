@@ -18,8 +18,9 @@
 <c:set var="name" scope="request" value="${person.login}"/>
 <p>
     Welcome, ${name}&nbsp;<a href="logout">(logout)</a>
-    <hr/>
 </p>
+<hr/>
+
 <section>
     <c:set var="role" scope="request" value="${person.role}"/>
     <c:if test="${role == 'admin'}">

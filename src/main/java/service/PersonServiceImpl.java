@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class PersonServiceImpl implements PersonService {
 
-    private static Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(PersonServiceImpl.class.getName());
 
     PersonServiceImpl(){}
 

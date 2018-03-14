@@ -48,7 +48,7 @@ public class DataUtil {
                 new BigDecimal(531),
                 1));
         for (Item item : items) {
-            Long id = adminService.createItem(item);
+            adminService.createItem(item);
         }
 
     }

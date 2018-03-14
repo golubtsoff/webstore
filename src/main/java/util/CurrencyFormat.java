@@ -9,8 +9,8 @@ import java.util.Locale;
  * Created by Evgeniy Golubtsov on 25.02.2018.
  */
 public abstract class CurrencyFormat {
-    private static Locale locale = Locale.US;
-    private static NumberFormat numberFormatter = NumberFormat.getCurrencyInstance(locale);
+    private static final Locale locale = Locale.US;
+    private static final NumberFormat numberFormatter = NumberFormat.getCurrencyInstance(locale);
 
     public static String format(BigDecimal number) {
         return numberFormatter.format(number);

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class UserServiceImpl extends PersonServiceImpl implements UserService {
 
-    private static Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
     UserServiceImpl() {
     }

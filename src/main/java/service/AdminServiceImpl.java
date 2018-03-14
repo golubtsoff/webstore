@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class AdminServiceImpl extends PersonServiceImpl implements AdminService {
 
-    private static Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
 
     AdminServiceImpl() {
     }

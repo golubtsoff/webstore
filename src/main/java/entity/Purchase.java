@@ -28,7 +28,7 @@ public class Purchase {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "ITEM_ID", nullable = true)
+    @JoinColumn(name = "ITEM_ID")
     private Item item;
 
     @Column(name = "DATETIME")

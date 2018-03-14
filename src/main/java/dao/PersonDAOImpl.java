@@ -25,8 +25,6 @@ public class PersonDAOImpl implements PersonDAO {
     @Override
     public Person getByName(String login) {
         Session session = DBService.getSessionFactory().getCurrentSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Person> criteria = builder.createQuery(Person.class);
         Query query = session.createQuery("from Person where login = :paramLogin");
         query.setParameter("paramLogin", login);
         return (Person) query.getSingleResult();

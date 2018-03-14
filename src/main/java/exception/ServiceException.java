@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  */
 public class ServiceException extends Exception {
 
-    private static Logger logger = Logger.getLogger(ServiceException.class.getName());
+    private static final Logger logger = Logger.getLogger(ServiceException.class.getName());
 
     public ServiceException(String message, Exception e) {
         super(message, e);
