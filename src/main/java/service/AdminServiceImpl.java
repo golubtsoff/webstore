@@ -7,9 +7,11 @@ import exception.DBException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import util.DBService;
 
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.*;
@@ -23,14 +25,17 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
     private static Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
 
-    public AdminServiceImpl(){
+    public AdminServiceImpl() {
     }
 
     @Override
     public long createItem(Item item) throws DBException {
+        Session session = DBService.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
         try {
-            Session session = DBService.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
 
             ItemDAO dao = new ItemDAOImpl();
             long id = dao.create(item);
@@ -41,15 +46,22 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
             return id;
         } catch (HibernateException | NoResultException e) {
+            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+                session.getTransaction().rollback();
+            }
             throw new DBException(e);
         }
     }
 
     @Override
     public void updateItem(Item item) throws DBException {
+        Session session = DBService.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
         try {
-            Session session = DBService.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
 
             ItemDAO dao = new ItemDAOImpl();
             dao.update(item);
@@ -58,15 +70,22 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
 
             logger.fine("Update item " + item);
         } catch (HibernateException | NoResultException e) {
+            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+                session.getTransaction().rollback();
+            }
             throw new DBException(e);
         }
     }
 
     @Override
     public void deleteItem(long id) throws DBException {
+        Session session = DBService.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
         try {
-            Session session = DBService.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
 
             ItemDAO dao = new ItemDAOImpl();
             Item item = dao.delete(id);
@@ -74,20 +93,34 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
             transaction.commit();
 
             logger.fine("Delete item " + item);
-        } catch (HibernateException | NoResultException | IllegalArgumentException e) {
+        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+                session.getTransaction().rollback();
+            }
             throw new DBException(e);
         }
     }
 
     @Override
     public List<Purchase> getPurchases() throws DBException {
+        Session session = DBService.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
         try {
-            Session session = DBService.getSessionFactory().getCurrentSession();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
             PurchaseDAO dao = new PurchaseDAOImpl();
-            return dao.getAll().stream()
+            List<Purchase> purchases = dao.getAll().stream()
                     .sorted(Comparator.comparing(Purchase::getDateTime))
                     .collect(Collectors.toList());
+            transaction.commit();
+            return purchases;
         } catch (HibernateException | NoResultException e) {
+            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+                session.getTransaction().rollback();
+            }
             throw new DBException(e);
         }
     }

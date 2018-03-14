@@ -31,8 +31,11 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
     @Override
     public long setPurchase(long itemId, int amount) throws DBException, ServiceException {
         Session session = DBService.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
         try {
-            session.beginTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
 
             ItemDAO itemDAO = new ItemDAOImpl();
             Item item = itemDAO.get(itemId);
@@ -51,7 +54,7 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             purchase = purchaseDAO.get(purchaseId);
             item.setAmount(item.getAmount() - amount);
 
-            session.getTransaction().commit();
+            transaction.commit();
 
             logger.fine("Item purchased: " + purchase);
             return purchaseId;
