@@ -11,22 +11,29 @@ import java.util.List;
  */
 public class PurchaseDAOImpl implements PurchaseDAO {
 
+    PurchaseDAOImpl() {
+    }
+
     @Override
     public Purchase get(long id) {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return session.get(Purchase.class, id);
+        return DBService.getSessionFactory()
+                .getCurrentSession()
+                .get(Purchase.class, id);
     }
 
     @Override
     public List<Purchase> getAll() {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return session.createQuery("from Purchase", Purchase.class).list();
+        return DBService.getSessionFactory()
+                .getCurrentSession()
+                .createQuery("from Purchase", Purchase.class)
+                .list();
     }
 
     @Override
     public long create(Purchase purchase) {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return (Long) session.save(purchase);
+        return (Long) DBService.getSessionFactory()
+                .getCurrentSession()
+                .save(purchase);
     }
 
 }

@@ -12,10 +12,14 @@ import javax.persistence.criteria.*;
  */
 public class PersonDAOImpl implements PersonDAO {
 
+    PersonDAOImpl() {
+    }
+
     @Override
     public Person get(long id) {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return session.get(Person.class, id);
+        return DBService.getSessionFactory()
+                .getCurrentSession()
+                .get(Person.class, id);
     }
 
     @Override
@@ -30,8 +34,9 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     public long create(Person person) {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return (Long) session.save(person);
+        return (Long) DBService.getSessionFactory()
+                .getCurrentSession()
+                .save(person);
     }
 
 }

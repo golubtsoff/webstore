@@ -37,7 +37,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
                 transaction = session.beginTransaction();
             }
 
-            ItemDAO dao = new ItemDAOImpl();
+            ItemDAO dao = DaoFactory.getItemDAO();
             long id = dao.create(item);
 
             transaction.commit();
@@ -63,7 +63,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
                 transaction = session.beginTransaction();
             }
 
-            ItemDAO dao = new ItemDAOImpl();
+            ItemDAO dao = DaoFactory.getItemDAO();
             dao.update(item);
 
             transaction.commit();
@@ -87,7 +87,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
                 transaction = session.beginTransaction();
             }
 
-            ItemDAO dao = new ItemDAOImpl();
+            ItemDAO dao = DaoFactory.getItemDAO();
             Item item = dao.delete(id);
 
             transaction.commit();
@@ -110,7 +110,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
             if (!transaction.isActive()) {
                 transaction = session.beginTransaction();
             }
-            PurchaseDAO dao = new PurchaseDAOImpl();
+            PurchaseDAO dao = DaoFactory.getPurchaseDAO();
             List<Purchase> purchases = dao.getAll().stream()
                     .sorted(Comparator.comparing(Purchase::getDateTime))
                     .collect(Collectors.toList());

@@ -33,7 +33,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             transaction = session.beginTransaction();
 
-            PersonDAO dao = new PersonDAOImpl();
+            PersonDAO dao = DaoFactory.getPersonDAO();
             Person person = dao.getByName(name);
             if (person == null || !person.getPassword().equals(password)){
                 return null;
@@ -65,7 +65,7 @@ public class PersonServiceImpl implements PersonService {
                 transaction = session.beginTransaction();
             }
 
-            PersonDAO dao = new PersonDAOImpl();
+            PersonDAO dao = DaoFactory.getPersonDAO();
             Long id = dao.create(new Person(name, password, role));
             Person person = dao.get(id);
 
@@ -92,7 +92,7 @@ public class PersonServiceImpl implements PersonService {
                 transaction = session.beginTransaction();
             }
 
-            ItemDAO dao = new ItemDAOImpl();
+            ItemDAO dao = DaoFactory.getItemDAO();
             Item item = dao.get(id);
 
             transaction.commit();
@@ -115,7 +115,7 @@ public class PersonServiceImpl implements PersonService {
             if (!transaction.isActive()) {
                 transaction = session.beginTransaction();
             }
-            ItemDAO dao = new ItemDAOImpl();
+            ItemDAO dao = DaoFactory.getItemDAO();
             List<Item> items = dao.getAll();
             if (person.getRole() == Role.admin){
                 items.sort(Comparator.comparing(Item::getTitle));

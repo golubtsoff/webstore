@@ -12,28 +12,35 @@ import java.util.List;
  */
 public class ItemDAOImpl implements ItemDAO {
 
+    ItemDAOImpl() {
+    }
+
     @Override
     public Item get(long id) {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return session.get(Item.class, id, LockMode.PESSIMISTIC_READ);
+        return DBService.getSessionFactory()
+                .getCurrentSession()
+                .get(Item.class, id, LockMode.PESSIMISTIC_READ);
     }
 
     @Override
     public List<Item> getAll() {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return session.createQuery("from Item", Item.class).list();
+        return DBService.getSessionFactory()
+                .getCurrentSession()
+                .createQuery("from Item", Item.class)
+                .list();
     }
 
     @Override
     public long create(Item item) {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        return (Long) session.save(item);
+        return (Long) DBService.getSessionFactory()
+                .getCurrentSession()
+                .save(item);
     }
 
     @Override
     public void update(Item item) {
-        Session session = DBService.getSessionFactory().getCurrentSession();
-        session.update(item);
+        DBService.getSessionFactory().getCurrentSession()
+                .update(item);
     }
 
     @Override

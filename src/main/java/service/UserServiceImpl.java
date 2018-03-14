@@ -37,7 +37,7 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
                 transaction = session.beginTransaction();
             }
 
-            ItemDAO itemDAO = new ItemDAOImpl();
+            ItemDAO itemDAO = DaoFactory.getItemDAO();
             Item item = itemDAO.get(itemId);
 
             if (!checkConditionPurchase(item, amount)) {
@@ -49,7 +49,7 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             }
 
             Purchase purchase = new Purchase(person, item, LocalDateTime.now(), amount);
-            PurchaseDAO purchaseDAO = new PurchaseDAOImpl();
+            PurchaseDAO purchaseDAO = DaoFactory.getPurchaseDAO();
             Long purchaseId = purchaseDAO.create(purchase);
             purchase = purchaseDAO.get(purchaseId);
             item.setAmount(item.getAmount() - amount);
