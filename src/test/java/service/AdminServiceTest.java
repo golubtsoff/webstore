@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.Assert.*;
-
+// TODO make all tests independent
 public class AdminServiceTest {
 
     private final PersonService personService = new PersonServiceImpl();
