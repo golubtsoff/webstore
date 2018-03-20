@@ -90,14 +90,6 @@ public class PersonServiceImpl implements PersonService {
         try {
             ItemDAO dao = DaoFactory.getItemDAO();
             List<Item> items = dao.getAll();
-            if (person.getRole() == Role.admin){
-                items.sort(Comparator.comparing(Item::getTitle));
-            } else {
-                items = items.stream()
-                        .filter((item) -> item.getAmount() > 0)
-                        .sorted(Comparator.comparing(Item::getTitle))
-                        .collect(Collectors.toList());
-            }
             transaction.commit();
             return items;
         } catch (HibernateException | NoResultException e) {

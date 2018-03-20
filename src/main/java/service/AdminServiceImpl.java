@@ -80,9 +80,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
         Transaction transaction = DBService.getTransaction();
         try {
             PurchaseDAO dao = DaoFactory.getPurchaseDAO();
-            List<Purchase> purchases = dao.getAll().stream()
-                    .sorted(Comparator.comparing(Purchase::getDateTime))
-                    .collect(Collectors.toList());
+            List<Purchase> purchases = dao.getAll();
             transaction.commit();
             return purchases;
         } catch (HibernateException | NoResultException e) {

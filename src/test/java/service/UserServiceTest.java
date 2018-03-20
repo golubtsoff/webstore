@@ -28,14 +28,14 @@ public class UserServiceTest {
     public void tearDown() throws Exception {
     }
 
-    @Test (expected = ServiceException.class)
+    @Test(expected = ServiceException.class)
     public void testSetPurchaseDBException() throws Exception {
         Person person = personService.signUp("Bob", "pass345");
         UserService userService = ServiceFactory.getUserService();
         userService.setPurchase(-1, -1, person);
     }
 
-    @Test (expected = DBException.class)
+    @Test(expected = DBException.class)
     public void testSetPurchaseServiceException() throws Exception {
         Person person = personService.signUp("Bob", "pass345");
         UserService userService = ServiceFactory.getUserService();
@@ -54,7 +54,7 @@ public class UserServiceTest {
     public void testSetPurchase() throws InterruptedException, DBException {
         final int COUNT_USER = 10;
         final int AMOUNT_ITEM = 5;
-        AtomicInteger countPurchase = new AtomicInteger(0);
+        final AtomicInteger countPurchase = new AtomicInteger(0);
 
         PersonService personService = new PersonServiceImpl();
         List<Person> persons = new ArrayList<>();
@@ -66,26 +66,39 @@ public class UserServiceTest {
                 new BigDecimal(10),
                 AMOUNT_ITEM);
         AdminService adminService = new AdminServiceImpl();
-        Long itemId = adminService.createItem(item);
+        final Long itemId = adminService.createItem(item);
 
         List<Thread> threads = new ArrayList<>();
-        for (Person person : persons){
-            threads.add(new Thread(() -> {
-                UserService userService = ServiceFactory.getUserService();
-                try {
-                    userService.setPurchase(itemId, 1, person);
-                    countPurchase.incrementAndGet();
-                } catch (DBException | ServiceException e) {
-                    e.printStackTrace();
+        for (final Person person : persons) {
+//            threads.add(new Thread(() -> {
+//                UserService userService = ServiceFactory.getUserService();
+//                try {
+//                    userService.setPurchase(itemId, 1, person);
+//                    countPurchase.incrementAndGet();
+//                } catch (DBException | ServiceException e) {
+//                    e.printStackTrace();
+//                }
+//            }));
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    UserService userService = ServiceFactory.getUserService();
+                    try {
+                        userService.setPurchase(itemId, 1, person);
+                        countPurchase.incrementAndGet();
+                    } catch (DBException | ServiceException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }));
+            };
+            threads.add(new Thread(runnable));
         }
 
-        for (Thread thread : threads){
+        for (Thread thread : threads) {
             thread.start();
         }
 
-        for (Thread thread : threads){
+        for (Thread thread : threads) {
             thread.join();
         }
 
