@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Evgeniy Golubtsov on 09.02.2018.
@@ -32,7 +32,7 @@ public class Purchase {
     private Item item;
 
     @Column(name = "DATETIME")
-    private LocalDateTime dateTime;
+    private Date dateTime;
 
     @NotNull
     @Column(name = "COST")
@@ -45,11 +45,11 @@ public class Purchase {
     public Purchase() {
     }
 
-    public Purchase(Person person, Item item, LocalDateTime dateTime, int amount) {
+    public Purchase(Person person, Item item, Date dateTime, int amount) {
         this(null, person, item, dateTime, amount);
     }
 
-    public Purchase(Long id, Person person, Item item, LocalDateTime dateTime, int amount) {
+    public Purchase(Long id, Person person, Item item, Date dateTime, int amount) {
         this.id = id;
         this.person = person;
         this.item = item;
@@ -70,7 +70,7 @@ public class Purchase {
         return item;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 

@@ -1,7 +1,5 @@
 package service;
 
-import entity.Person;
-
 public abstract class ServiceFactory {
     private static volatile AdminService adminService;
     private static volatile PersonService personService;

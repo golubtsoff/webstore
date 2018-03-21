@@ -10,10 +10,8 @@ import org.hibernate.Transaction;
 import util.DBService;
 
 import javax.persistence.NoResultException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * Created by Evgeniy Golubtsov on 18.02.2018.
@@ -25,7 +23,6 @@ public class PersonServiceImpl implements PersonService {
 
     PersonServiceImpl(){}
 
-    @Override
     public Person signIn(String name, String password) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
@@ -44,12 +41,10 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
-    @Override
     public Person signUp(String name, String password) throws DBException {
         return this.signUp(name, password, Role.user);
     }
 
-    @Override
     public Person signUp(String name, String password, Role role) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
@@ -68,7 +63,6 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
-    @Override
     public Item getItem(long id) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
@@ -84,7 +78,6 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
-    @Override
     public List<Item> getItems(Person person) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {

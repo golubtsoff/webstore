@@ -10,7 +10,7 @@ import org.hibernate.*;
 import util.DBService;
 
 import javax.persistence.NoResultException;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -36,7 +36,7 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
                 throw new ServiceException("No item for purchase");
             }
 
-            Purchase purchase = new Purchase(person, item, LocalDateTime.now(), amount);
+            Purchase purchase = new Purchase(person, item, new Date(), amount);
             PurchaseDAO purchaseDAO = DaoFactory.getPurchaseDAO();
             Long purchaseId = purchaseDAO.create(purchase);
             purchase = purchaseDAO.get(purchaseId);

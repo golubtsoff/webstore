@@ -9,10 +9,8 @@ import org.hibernate.Transaction;
 import util.DBService;
 
 import javax.persistence.NoResultException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Evgeniy Golubtsov on 12.02.2018.
@@ -25,7 +23,6 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     AdminServiceImpl() {
     }
 
-    @Override
     public long createItem(Item item) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
@@ -43,7 +40,6 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
         }
     }
 
-    @Override
     public void updateItem(Item item) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
@@ -59,7 +55,6 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
         }
     }
 
-    @Override
     public void deleteItem(long id) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
@@ -75,7 +70,6 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
         }
     }
 
-    @Override
     public List<Purchase> getPurchases() throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
