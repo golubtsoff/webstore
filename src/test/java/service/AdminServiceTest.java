@@ -16,27 +16,11 @@ import static data.TestData.*;
 import static org.junit.Assert.*;
 
 // TODO make all tests independent
-public class AdminServiceTest {
-
-    public  final List<Long> itemsId = new ArrayList<>();
-    public  Person personSigned;
-    public  Person personNotSigned;
-    public  Person personAdmin;
+public class AdminServiceTest extends ServiceTest {
 
     @Before
     public void setUp() throws Exception {
-//        initData();
-        adminService.deleteAllItems();
-        adminService.deleteAllPersons();
-        adminService.deleteAllPurchases();
-
-        personSigned = personService.signUp("Bob", "pass345");
-        personAdmin = personService.signUp("admin", "pass123", Role.admin);
-        personNotSigned = new Person("Alex", "pass123");
-
-        itemsId.add(adminService.createItem(item1));
-        itemsId.add(adminService.createItem(item2));
-        itemsId.add(adminService.createItem(item3));
+        initData();
     }
 
     @After

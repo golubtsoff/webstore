@@ -45,8 +45,4 @@ public class TestData {
                 17);
 
     }
-
-    public static void initData() throws DBException {
-
-    }
 }
