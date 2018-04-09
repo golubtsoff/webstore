@@ -1,7 +1,6 @@
 package service;
 
 import entity.Person;
-import entity.Role;
 import exception.DBException;
 import exception.ServiceException;
 import org.junit.After;

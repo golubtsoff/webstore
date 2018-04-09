@@ -1,15 +1,12 @@
 package service;
 
 import entity.Item;
-import entity.Person;
 import entity.Purchase;
-import entity.Role;
 import exception.DBException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static data.TestData.*;

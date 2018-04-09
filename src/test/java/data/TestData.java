@@ -1,17 +1,12 @@
 package data;
 
 import entity.Item;
-import entity.Person;
-import entity.Role;
-import exception.DBException;
 import service.AdminService;
 import service.PersonService;
 import service.ServiceFactory;
 import service.UserService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TestData {
     public static final PersonService personService = ServiceFactory.getPersonService();
