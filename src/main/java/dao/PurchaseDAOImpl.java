@@ -35,4 +35,12 @@ public class PurchaseDAOImpl implements PurchaseDAO {
                 .save(purchase);
     }
 
+    @Override
+    public void deleteAll(){
+        DBService.getSessionFactory()
+                .getCurrentSession()
+                .createQuery("delete from Purchase")
+                .executeUpdate();
+    }
+
 }

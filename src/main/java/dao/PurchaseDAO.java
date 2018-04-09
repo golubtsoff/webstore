@@ -14,4 +14,6 @@ public interface PurchaseDAO{
     List<Purchase> getAll();
 
     long create(Purchase purchase);
+
+    void deleteAll();
 }

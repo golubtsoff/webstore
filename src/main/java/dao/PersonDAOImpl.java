@@ -36,4 +36,12 @@ public class PersonDAOImpl implements PersonDAO {
                 .save(person);
     }
 
+    @Override
+    public void deleteAll(){
+        DBService.getSessionFactory()
+                .getCurrentSession()
+                .createQuery("delete from Person")
+                .executeUpdate();
+    }
+
 }

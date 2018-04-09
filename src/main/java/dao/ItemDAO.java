@@ -18,4 +18,6 @@ public interface ItemDAO{
     void update(Item item);
 
     Item delete(long id);
+
+    void deleteAll();
 }

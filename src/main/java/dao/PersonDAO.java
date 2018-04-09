@@ -12,4 +12,6 @@ public interface PersonDAO{
     Person getByName(String login);
 
     long create(Person account);
+
+    void deleteAll();
 }
