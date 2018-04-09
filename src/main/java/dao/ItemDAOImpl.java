@@ -50,4 +50,12 @@ public class ItemDAOImpl implements ItemDAO {
         session.delete(item);
         return item;
     }
+
+    @Override
+    public void deleteAll(){
+        DBService.getSessionFactory()
+                .getCurrentSession()
+                .createQuery("delete from Item")
+                .executeUpdate();
+    }
 }

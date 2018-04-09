@@ -76,6 +76,54 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     }
 
     @Override
+    public void deleteAllItems() throws DBException{
+        Transaction transaction = DBService.getTransaction();
+        try {
+            ItemDAO dao = DaoFactory.getItemDAO();
+            dao.deleteAll();
+
+            transaction.commit();
+
+            logger.fine("Delete all items");
+        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+            DBService.transactionRollback(transaction);
+            throw new DBException(e);
+        }
+    }
+
+    @Override
+    public void deleteAllPersons() throws DBException{
+        Transaction transaction = DBService.getTransaction();
+        try {
+            PersonDAO dao = DaoFactory.getPersonDAO();
+            dao.deleteAll();
+
+            transaction.commit();
+
+            logger.fine("Delete all persons");
+        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+            DBService.transactionRollback(transaction);
+            throw new DBException(e);
+        }
+    }
+
+    @Override
+    public void deleteAllPurchases() throws DBException{
+        Transaction transaction = DBService.getTransaction();
+        try {
+            PurchaseDAO dao = DaoFactory.getPurchaseDAO();
+            dao.deleteAll();
+
+            transaction.commit();
+
+            logger.fine("Delete all purchases");
+        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+            DBService.transactionRollback(transaction);
+            throw new DBException(e);
+        }
+    }
+
+    @Override
     public List<Purchase> getPurchases() throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
