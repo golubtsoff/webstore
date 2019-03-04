@@ -28,7 +28,8 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
     public long setPurchase(long itemId, int amount, Person person) throws DBException, ServiceException {
         Transaction transaction = DBService.getTransaction();
         try {
-            ItemDAO itemDAO = DaoFactory.getItemDAO();
+            ItemDAO itemDAO = DaoFactory.getDao(ItemDAO.class);
+            assert itemDAO != null;
             Item item = itemDAO.get(itemId);
 
             if (!checkConditionPurchase(item, amount)) {
@@ -37,7 +38,8 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             }
 
             Purchase purchase = new Purchase(person, item, LocalDateTime.now(), amount);
-            PurchaseDAO purchaseDAO = DaoFactory.getPurchaseDAO();
+            PurchaseDAO purchaseDAO = DaoFactory.getDao(PurchaseDAO.class);
+            assert purchaseDAO != null;
             Long purchaseId = purchaseDAO.create(purchase);
             purchase = purchaseDAO.get(purchaseId);
             item.setAmount(item.getAmount() - amount);

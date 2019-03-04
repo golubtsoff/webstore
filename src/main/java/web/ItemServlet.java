@@ -73,46 +73,50 @@ public class ItemServlet extends HttpServlet {
             return;
         }
 
-        if (person.getRole() == Role.admin) {
-            AdminService adminService = ServiceFactory.getAdminService();
-            if (action.equalsIgnoreCase("delete") && itemIdString != null) {
-                try {
-                    adminService.deleteItem(Long.parseLong(itemIdString));
-                    response.sendRedirect("items");
-                } catch (DBException e) {
-                    response.sendRedirect("error");
-                }
-            } else if (action.equalsIgnoreCase("edit") && itemIdString != null) {
-                try {
-                    Item item = adminService.getItem(Long.parseLong(itemIdString));
+        switch (person.getRole()) {
+            case admin:
+                AdminService adminService = ServiceFactory.getAdminService();
+                if (action.equalsIgnoreCase("delete") && itemIdString != null) {
+                    try {
+                        adminService.deleteItem(Long.parseLong(itemIdString));
+                        response.sendRedirect("items");
+                    } catch (DBException e) {
+                        response.sendRedirect("error");
+                    }
+                } else if (action.equalsIgnoreCase("edit") && itemIdString != null) {
+                    try {
+                        Item item = adminService.getItem(Long.parseLong(itemIdString));
+                        request.setAttribute("item", item);
+                        request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
+                    } catch (DBException e) {
+                        response.sendRedirect("error");
+                    }
+
+                } else if (action.equalsIgnoreCase("add")) {
+                    Item item = new Item(-1L, "", "", new BigDecimal(0), 0);
                     request.setAttribute("item", item);
                     request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
-                } catch (DBException e) {
+                } else {
                     response.sendRedirect("error");
                 }
+                break;
+            case user:
+                UserService userService = ServiceFactory.getUserService();
+                if (action.equalsIgnoreCase("buy") && itemIdString != null) {
+                    try {
+                        userService.setPurchase(Long.parseLong(itemIdString), 1, person);
+                        response.sendRedirect("items");
+                    } catch (DBException | ServiceException e) {
+                        response.sendRedirect("error");
+                    }
 
-            } else if (action.equalsIgnoreCase("add")) {
-                Item item = new Item(-1L, "", "", new BigDecimal(0), 0);
-                request.setAttribute("item", item);
-                request.getRequestDispatcher("/WEB-INF/jsp/edit_item.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("error");
-            }
-        } else if (person.getRole() == Role.user) {
-            UserService userService = ServiceFactory.getUserService();
-            if (action.equalsIgnoreCase("buy") && itemIdString != null) {
-                try {
-                    userService.setPurchase(Long.parseLong(itemIdString), 1, person);
-                    response.sendRedirect("items");
-                } catch (DBException | ServiceException e) {
+                } else {
                     response.sendRedirect("error");
                 }
-
-            } else {
+                break;
+            default:
                 response.sendRedirect("error");
-            }
-        } else {
-            response.sendRedirect("error");
+                break;
         }
     }
 

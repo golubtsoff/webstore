@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Evgeniy Golubtsov on 10.02.2018.
  */
-public interface PurchaseDAO{
+public interface PurchaseDAO extends Dao{
 
     Purchase get(long id);
 

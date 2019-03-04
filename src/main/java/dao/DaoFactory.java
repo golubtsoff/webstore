@@ -1,41 +1,22 @@
 package dao;
 
+import entity.Item;
+
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class DaoFactory {
-    private static volatile ItemDAO itemDAO;
-    private static volatile PersonDAO personDAO;
-    private static volatile PurchaseDAO purchaseDAO;
 
+    private static List<Dao> daoList = Arrays.asList(
+            new ItemDAOImpl(),
+            new PersonDAOImpl(),
+            new PurchaseDAOImpl()
+    );
 
-    public static ItemDAO getItemDAO() {
-        if(itemDAO == null) {
-            synchronized(DaoFactory.class) {
-                if(itemDAO == null) {
-                    itemDAO = new ItemDAOImpl();
-                }
-            }
-        }
-        return itemDAO;
-    }
-
-    public static PersonDAO getPersonDAO() {
-        if(personDAO == null) {
-            synchronized(DaoFactory.class) {
-                if(personDAO == null) {
-                    personDAO = new PersonDAOImpl();
-                }
-            }
-        }
-        return personDAO;
-    }
-
-    public static PurchaseDAO getPurchaseDAO() {
-        if(purchaseDAO == null) {
-            synchronized(DaoFactory.class) {
-                if(purchaseDAO == null) {
-                    purchaseDAO = new PurchaseDAOImpl();
-                }
-            }
-        }
-        return purchaseDAO;
+    public static <T extends Dao> T getDao(Class<T> cl){
+        for(Dao dao : daoList)
+            if (cl.isInstance(dao))
+                return cl.cast(dao);
+        return null;
     }
 }

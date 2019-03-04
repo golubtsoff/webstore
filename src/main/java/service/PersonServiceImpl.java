@@ -29,7 +29,8 @@ public class PersonServiceImpl implements PersonService {
     public Person signIn(String name, String password) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            PersonDAO dao = DaoFactory.getPersonDAO();
+            PersonDAO dao = DaoFactory.getDao(PersonDAO.class);
+            assert dao != null;
             Person person = dao.getByName(name);
             if (person == null || !person.getPassword().equals(password)){
                 return null;
@@ -38,7 +39,7 @@ public class PersonServiceImpl implements PersonService {
             transaction.commit();
             logger.fine("Person signed: " + person);
             return person;
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -53,7 +54,8 @@ public class PersonServiceImpl implements PersonService {
     public Person signUp(String name, String password, Role role) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            PersonDAO dao = DaoFactory.getPersonDAO();
+            PersonDAO dao = DaoFactory.getDao(PersonDAO.class);
+            assert dao != null;
             Long id = dao.create(new Person(name, password, role));
             Person person = dao.get(id);
 
@@ -62,7 +64,7 @@ public class PersonServiceImpl implements PersonService {
             logger.fine("Person registered: " + person);
 
             return person;
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -72,13 +74,14 @@ public class PersonServiceImpl implements PersonService {
     public Item getItem(long id) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            ItemDAO dao = DaoFactory.getItemDAO();
+            ItemDAO dao = DaoFactory.getDao(ItemDAO.class);
+            assert dao != null;
             Item item = dao.get(id);
 
             transaction.commit();
             return item;
 
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -88,7 +91,8 @@ public class PersonServiceImpl implements PersonService {
     public List<Item> getItems(Person person) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            ItemDAO dao = DaoFactory.getItemDAO();
+            ItemDAO dao = DaoFactory.getDao(ItemDAO.class);
+            assert dao != null;
             List<Item> items = dao.getAll();
             if (person.getRole() == Role.admin){
                 items.sort(Comparator.comparing(Item::getTitle));
@@ -100,7 +104,7 @@ public class PersonServiceImpl implements PersonService {
             }
             transaction.commit();
             return items;
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }

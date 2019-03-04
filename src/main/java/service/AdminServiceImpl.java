@@ -29,7 +29,8 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public long createItem(Item item) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            ItemDAO dao = DaoFactory.getItemDAO();
+            ItemDAO dao = DaoFactory.getDao(ItemDAO.class);
+            assert dao != null;
             long id = dao.create(item);
 
             transaction.commit();
@@ -37,7 +38,7 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
             logger.fine("Create item " + item);
 
             return id;
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -47,13 +48,14 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public void updateItem(Item item) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            ItemDAO dao = DaoFactory.getItemDAO();
+            ItemDAO dao = DaoFactory.getDao(ItemDAO.class);
+            assert dao != null;
             dao.update(item);
 
             transaction.commit();
 
             logger.fine("Update item " + item);
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -63,13 +65,15 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public void deleteItem(long id) throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            ItemDAO dao = DaoFactory.getItemDAO();
+            ItemDAO dao = DaoFactory.getDao(ItemDAO.class);
+            assert dao != null;
             Item item = dao.delete(id);
 
             transaction.commit();
 
             logger.fine("Delete item " + item);
-        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+        } catch (HibernateException | NoResultException | IllegalArgumentException
+                | IllegalStateException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -79,13 +83,15 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public void deleteAllItems() throws DBException{
         Transaction transaction = DBService.getTransaction();
         try {
-            ItemDAO dao = DaoFactory.getItemDAO();
+            ItemDAO dao = DaoFactory.getDao(ItemDAO.class);
+            assert dao != null;
             dao.deleteAll();
 
             transaction.commit();
 
             logger.fine("Delete all items");
-        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+        } catch (HibernateException | NoResultException | IllegalArgumentException
+                | IllegalStateException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -95,13 +101,15 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public void deleteAllPersons() throws DBException{
         Transaction transaction = DBService.getTransaction();
         try {
-            PersonDAO dao = DaoFactory.getPersonDAO();
+            PersonDAO dao = DaoFactory.getDao(PersonDAO.class);
+            assert dao != null;
             dao.deleteAll();
 
             transaction.commit();
 
             logger.fine("Delete all persons");
-        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+        } catch (HibernateException | NoResultException | IllegalArgumentException
+                | IllegalStateException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -111,13 +119,15 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public void deleteAllPurchases() throws DBException{
         Transaction transaction = DBService.getTransaction();
         try {
-            PurchaseDAO dao = DaoFactory.getPurchaseDAO();
+            PurchaseDAO dao = DaoFactory.getDao(PurchaseDAO.class);
+            assert dao != null;
             dao.deleteAll();
 
             transaction.commit();
 
             logger.fine("Delete all purchases");
-        } catch (HibernateException | NoResultException | IllegalArgumentException | IllegalStateException e) {
+        } catch (HibernateException | NoResultException | IllegalArgumentException
+                | IllegalStateException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }
@@ -127,13 +137,14 @@ public class AdminServiceImpl extends PersonServiceImpl implements AdminService 
     public List<Purchase> getPurchases() throws DBException {
         Transaction transaction = DBService.getTransaction();
         try {
-            PurchaseDAO dao = DaoFactory.getPurchaseDAO();
+            PurchaseDAO dao = DaoFactory.getDao(PurchaseDAO.class);
+            assert dao != null;
             List<Purchase> purchases = dao.getAll().stream()
                     .sorted(Comparator.comparing(Purchase::getDateTime))
                     .collect(Collectors.toList());
             transaction.commit();
             return purchases;
-        } catch (HibernateException | NoResultException e) {
+        } catch (HibernateException | NoResultException | NullPointerException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
         }

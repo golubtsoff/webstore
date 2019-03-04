@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Evgeniy Golubtsov on 10.02.2018.
  */
-public interface ItemDAO{
+public interface ItemDAO extends Dao{
 
     Item get(long id);
 

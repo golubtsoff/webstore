@@ -5,7 +5,7 @@ import entity.Person;
 /**
  * Created by Evgeniy Golubtsov on 10.02.2018.
  */
-public interface PersonDAO{
+public interface PersonDAO extends Dao{
 
     Person get(long id);
 
