@@ -34,11 +34,9 @@ public class Purchase {
     @Column(name = "DATETIME")
     private LocalDateTime dateTime;
 
-    @NotNull
     @Column(name = "COST")
     private BigDecimal cost;
 
-    @NotNull
     @Column(name = "AMOUNT")
     private int amount;
 
@@ -49,7 +47,7 @@ public class Purchase {
         this(null, person, item, dateTime, amount);
     }
 
-    public Purchase(Long id, Person person, Item item, LocalDateTime dateTime, int amount) {
+    private Purchase(Long id, Person person, Item item, LocalDateTime dateTime, int amount) {
         this.id = id;
         this.person = person;
         this.item = item;

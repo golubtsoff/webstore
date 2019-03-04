@@ -3,7 +3,6 @@ package service;
 import entity.Item;
 import entity.Purchase;
 import exception.DBException;
-import util.DBService;
 
 import java.util.List;
 

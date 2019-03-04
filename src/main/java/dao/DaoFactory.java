@@ -1,7 +1,5 @@
 package dao;
 
-import entity.Item;
-
 import java.util.Arrays;
 import java.util.List;
 

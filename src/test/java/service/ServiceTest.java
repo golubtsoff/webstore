@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static data.TestData.*;
-import static data.TestData.adminService;
-import static data.TestData.item3;
 
-public abstract class ServiceTest {
+abstract class ServiceTest {
 
     protected List<Long> itemsId = new ArrayList<>();
     protected Person personSigned;

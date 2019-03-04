@@ -3,7 +3,6 @@ package web;
 import entity.Person;
 import exception.DBException;
 import service.PersonService;
-import service.PersonServiceImpl;
 import service.ServiceFactory;
 
 import javax.servlet.ServletException;

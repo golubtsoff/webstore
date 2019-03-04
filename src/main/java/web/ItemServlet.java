@@ -2,7 +2,6 @@ package web;
 
 import entity.Item;
 import entity.Person;
-import entity.Role;
 import exception.DBException;
 import exception.ServiceException;
 import service.*;
