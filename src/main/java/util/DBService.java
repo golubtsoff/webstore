@@ -25,6 +25,7 @@ public abstract class DBService {
     private static String hibernate_hbm2ddl_auto = null;
 
     private static final String path = "/database.properties";
+    @SuppressWarnings("CanBeFinal")
     private static SessionFactory sessionFactory;
 
     static {

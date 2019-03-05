@@ -19,10 +19,6 @@ public class PersonServiceTest extends ServiceTest {
         initData();
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @Test
     public void testSignIn() throws Exception {
         Person testPerson = personService.signIn(personSigned.getLogin(), personSigned.getPassword());

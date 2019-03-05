@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class DaoFactory {
 
-    private static List<Dao> daoList = Arrays.asList(
+    private static final List<Dao> daoList = Arrays.asList(
             new ItemDAOImpl(),
             new PersonDAOImpl(),
             new PurchaseDAOImpl()

@@ -9,5 +9,5 @@ import exception.ServiceException;
  */
 public interface UserService extends PersonService {
 
-    long setPurchase(long itemId, int amount, Person person) throws DBException, ServiceException;
+    void setPurchase(long itemId, int amount, Person person) throws DBException, ServiceException;
 }

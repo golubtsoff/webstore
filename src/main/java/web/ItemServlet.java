@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class ItemServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             request.setCharacterEncoding("UTF-8");
             Item item = getItem(request);

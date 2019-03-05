@@ -3,7 +3,6 @@ package service;
 import entity.Person;
 import exception.DBException;
 import exception.ServiceException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,10 +18,6 @@ public class UserServiceTest extends ServiceTest {
     @Before
     public void setUp() throws Exception {
         initData();
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test (expected = ServiceException.class)

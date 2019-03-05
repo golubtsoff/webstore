@@ -3,7 +3,6 @@ package service;
 import entity.Item;
 import entity.Purchase;
 import exception.DBException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,10 +17,6 @@ public class AdminServiceTest extends ServiceTest {
     @Before
     public void setUp() throws Exception {
         initData();
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test

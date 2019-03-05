@@ -11,12 +11,12 @@ import static data.TestData.*;
 
 abstract class ServiceTest {
 
-    protected List<Long> itemsId = new ArrayList<>();
-    protected Person personSigned;
-    protected Person personNotSigned;
-    protected Person personAdmin;
+    final List<Long> itemsId = new ArrayList<>();
+    Person personSigned;
+    Person personNotSigned;
+    Person personAdmin;
 
-    protected void initData() throws DBException{
+    void initData() throws DBException{
         adminService.deleteAllItems();
         adminService.deleteAllPersons();
         adminService.deleteAllPurchases();

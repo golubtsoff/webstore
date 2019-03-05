@@ -43,11 +43,6 @@ public class Person {
         this.role = role;
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
     public String getLogin() {
         return login;
     }
@@ -56,18 +51,9 @@ public class Person {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Role getRole() {
         return role;
     }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
 
     @Override
     public String toString() {

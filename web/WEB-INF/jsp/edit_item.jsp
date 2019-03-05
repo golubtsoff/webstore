@@ -5,7 +5,7 @@
   Time: 10:30
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="util.CurrencyFormat" %>
 <html>
@@ -36,26 +36,35 @@
             <table cellpadding="2">
                 <tr>
                     <td><strong>Title</strong><br/> (max 150 symbols)</td>
-                    <td><input required type="text" name="title" size=30 maxlength="150" value="${item.title}"></td>
+                    <td><label>
+                        <input required type="text" name="title" size=30 maxlength="150" value="${item.title}">
+                    </label></td>
                 </tr>
                 <tr>
                     <td><strong>Description</strong><br/> (max 1000 symbols)</td>
-                    <td><textarea name="description" cols="30" rows="10" maxlength="1000">${item.description}</textarea>
+                    <td><label>
+                        <textarea name="description" cols="30" rows="10" maxlength="1000">${item.description}</textarea>
+                    </label>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Price</strong></td>
-                    <td><span class="currencyinput"><%=CurrencyFormat.getCurrency()%><input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0"></span></td>
+                    <td><span class="currencyinput"><%=CurrencyFormat.getCurrency()%><label>
+<input required type="number" name="price" size=30 value="${item.price}" step="0.01" min="0">
+</label></span></td>
                 </tr>
                 <tr>
                     <td><strong>Amount</strong></td>
-                    <td><input required type="number" name="amount" size=30 value="${item.amount}" min="0"></td>
+                    <td><label>
+                        <input required type="number" name="amount" size=30 value="${item.amount}" min="0">
+                    </label></td>
                 </tr>
             </table>
             <hr/>
             <button type="submit">Save</button>
             <button type="button" onclick="window.history.back()">Cancel</button>
         </form>
+        <%--@elvariable id="exception" type="exception"--%>
         <c:if test="${not empty exception}">
             <p style="color:red;">
                     ${exception}

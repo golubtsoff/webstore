@@ -25,7 +25,7 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
     }
 
     @Override
-    public long setPurchase(long itemId, int amount, Person person) throws DBException, ServiceException {
+    public void setPurchase(long itemId, int amount, Person person) throws DBException, ServiceException {
         Transaction transaction = DBService.getTransaction();
         try {
             ItemDAO itemDAO = DaoFactory.getDao(ItemDAO.class);
@@ -47,7 +47,6 @@ public class UserServiceImpl extends PersonServiceImpl implements UserService {
             transaction.commit();
 
             logger.fine("Item purchased: " + purchase);
-            return purchaseId;
         } catch (HibernateException | NoResultException e) {
             DBService.transactionRollback(transaction);
             throw new DBException(e);
