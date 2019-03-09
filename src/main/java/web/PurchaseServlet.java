@@ -20,7 +20,8 @@ public class PurchaseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
-            AdminService adminService = ServiceFactory.getAdminService();
+            AdminService adminService = ServiceFactory.getService(AdminService.class);
+            assert adminService != null;
             try {
                 request.setAttribute("purchases", adminService.getPurchases());
                 request.getRequestDispatcher("/WEB-INF/jsp/view_purchases.jsp").forward(request, response);

@@ -21,7 +21,9 @@ public class ItemServlet extends HttpServlet {
         try {
             request.setCharacterEncoding("UTF-8");
             Item item = getItem(request);
-            AdminService adminService = ServiceFactory.getAdminService();
+            AdminService adminService = ServiceFactory.getService(AdminService.class);
+
+            assert adminService != null;
             if (item.getId() > 0) {
                 adminService.updateItem(item);
             } else {
@@ -48,7 +50,9 @@ public class ItemServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         Person person = (Person) session.getAttribute("person");
         String action = request.getParameter("action");
-        PersonService personService = ServiceFactory.getPersonService();
+        PersonService personService = ServiceFactory.getService(PersonService.class);
+
+        assert personService != null;
         if (action == null) {
             try {
                 request.setAttribute("items", personService.getItems(person));
@@ -74,7 +78,9 @@ public class ItemServlet extends HttpServlet {
 
         switch (person.getRole()) {
             case admin:
-                AdminService adminService = ServiceFactory.getAdminService();
+                AdminService adminService = ServiceFactory.getService(AdminService.class);
+
+                assert adminService != null;
                 if (action.equalsIgnoreCase("delete") && itemIdString != null) {
                     try {
                         adminService.deleteItem(Long.parseLong(itemIdString));
@@ -100,7 +106,8 @@ public class ItemServlet extends HttpServlet {
                 }
                 break;
             case user:
-                UserService userService = ServiceFactory.getUserService();
+                UserService userService = ServiceFactory.getService(UserService.class);
+                assert userService != null;
                 if (action.equalsIgnoreCase("buy") && itemIdString != null) {
                     try {
                         userService.setPurchase(Long.parseLong(itemIdString), 1, person);

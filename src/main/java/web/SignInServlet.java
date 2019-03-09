@@ -27,7 +27,9 @@ public class SignInServlet extends HttpServlet {
             return;
         }
 
-        PersonService personService = ServiceFactory.getPersonService();
+        PersonService personService = ServiceFactory.getService(PersonService.class);
+
+        assert personService != null;
         Person person;
         try{
             person = personService.signIn(login, password);

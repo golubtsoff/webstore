@@ -17,10 +17,12 @@ abstract class ServiceTest {
     Person personAdmin;
 
     void initData() throws DBException{
+        assert adminService != null;
         adminService.deleteAllItems();
         adminService.deleteAllPersons();
         adminService.deleteAllPurchases();
 
+        assert personService != null;
         personSigned = personService.signUp("Bob", "pass345");
         personAdmin = personService.signUp("admin", "pass123", Role.admin);
         personNotSigned = new Person("Alex", "pass123");

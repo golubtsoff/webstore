@@ -9,9 +9,9 @@ import service.UserService;
 import java.math.BigDecimal;
 
 public class TestData {
-    public static final PersonService personService = ServiceFactory.getPersonService();
-    public static final AdminService adminService = ServiceFactory.getAdminService();
-    public static final UserService userService = ServiceFactory.getUserService();
+    public static final PersonService personService = ServiceFactory.getService(PersonService.class);
+    public static final AdminService adminService = ServiceFactory.getService(AdminService.class);
+    public static final UserService userService = ServiceFactory.getService(UserService.class);
 
     public static final Item item1;
     public static final Item item2;

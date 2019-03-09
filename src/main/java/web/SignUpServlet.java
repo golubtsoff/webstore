@@ -30,7 +30,9 @@ public class SignUpServlet extends HttpServlet {
             return;
         }
 
-        PersonService personService = ServiceFactory.getPersonService();
+        PersonService personService = ServiceFactory.getService(PersonService.class);
+
+        assert personService != null;
         Person person;
         try{
             person = personService.signUp(login, password);

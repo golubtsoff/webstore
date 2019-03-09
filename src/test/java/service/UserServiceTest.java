@@ -22,11 +22,13 @@ public class UserServiceTest extends ServiceTest {
 
     @Test (expected = ServiceException.class)
     public void testSetPurchaseDBException() throws Exception {
+        assert userService != null;
         userService.setPurchase(-1, -1, personSigned);
     }
 
     @Test (expected = ServiceException.class)
     public void testSetPurchaseServiceException() throws Exception {
+        assert userService != null;
         userService.setPurchase(itemsId.get(2), 1, personSigned);
     }
 
@@ -39,15 +41,18 @@ public class UserServiceTest extends ServiceTest {
 
         List<Person> persons = new ArrayList<>();
         for (int i = 0; i < COUNT_USER; i++) {
+            assert personService != null;
             persons.add(personService.signUp("user100" + i, "user100" + i));
         }
 
+        assert adminService != null;
         Long itemId = adminService.createItem(item4);
 
         List<Thread> threads = new ArrayList<>();
         for (Person person : persons){
             threads.add(new Thread(() -> {
                 try {
+                    assert userService != null;
                     userService.setPurchase(itemId, 1, person);
                     countPurchase.incrementAndGet();
                 } catch (DBException | ServiceException e) {
